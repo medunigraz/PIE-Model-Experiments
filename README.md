@@ -3,16 +3,16 @@ This repository provides a guide and the necessary resources for reproducing the
 
 ## Description
 The `setups` directory contains the six experimental setups from the study:
-* 2_restitution: the left-hand face of a strip of healthy tissue is paced with a dynamic pacing protocol to investigate APD and CV restitution properties.
-* 3_curvature: concave and convex wave fronts are induced in healthy tissue to investigate curvature properties.
-* 4_diffusion: an interface between healthy and borderzone tissue types is paced at the bottom to investigate diffusion properties.
-* 5_isthmus: an anatomical reentry is simulated by pacing below an isthmus-shaped scar using an S1-S2 protocol.
-* 6_rotor: a functional reentry is induced by stimulating a patch of tissue that overlaps with the waveback of a preceding planar wave front.
-* 7_wholeheart: a scar-induced ventricular tachycardia is simulated in an anatomically detailed human whole heart model. 
+* A1_anatomical: an anatomical reentry is simulated by pacing below an isthmus-shaped scar using an S1-S2 protocol.
+* A2_functional: a functional reentry is induced by stimulating a patch of tissue that overlaps with the waveback of a preceding planar wave front.
+* A3_wholeheart: a scar-induced ventricular tachycardia is simulated in an anatomically detailed human whole heart model. 
+* B1_restitution: the left-hand face of a strip of healthy tissue is paced with a dynamic pacing protocol to investigate APD and CV restitution properties.
+* B2_curvature: concave and convex wave fronts are induced in healthy tissue to investigate curvature properties.
+* B3_diffusion: an interface between healthy and borderzone tissue types is paced at the bottom to investigate diffusion properties.
 
 Each setup consists of a simulation plan in `.json` format and directories with mesh files in 250um and 1000um resolution stored in both binary carp and VTK formats. The binary carp meshes can be visualized in [NumeriCor Studio](https://numericor.at/rlb/wordpress/products/#ProdStudio) while the VTK meshes can be visualized in [ParaView](https://www.paraview.org/). The human whole-heart experiment was derived from [1] and additionally contains a directory with the lead-field data required for ECG reconstruction. 
 
-Note: The meshes for each setup, except the `7_wholeheart`, are generated at runtime if not present. The complete dataset including the calibration data, the generated meshes, the anonymized human whole-heart model and respective lead-field data is available via [Zenodo](https://doi.org/10.5281/zenodo.17198150) after the embargo is lifted.
+Note: The meshes for each setup, except the `A3_wholeheart`, are generated at runtime if not present. The complete dataset including the calibration data, the generated meshes, the anonymized human whole-heart model with lead-field data and rendered videos of each experiment are available via [Zenodo](https://doi.org/10.5281/zenodo.17198150) after the embargo is lifted.
 
 The `calibration` directory contains files that represent captured physiological properties aquired through ForCEPSS [2] which are referenced by the simulation plans. 
 
@@ -23,8 +23,6 @@ The `scripts` directory contains a collection of python scripts to generate, pro
 * `error-density.py`: plots KDEs of LAT, CV and LRT error density maps for a given setup.
 * `phase_singularitiy_tracking.py`: performs phase singularity tracking and visualization.
 * `ecg_comparison.py`: visualizes computed ECGs.
-
-The `videos` directory contains rendered videos of each experiment in `.mp4` format. 
 
 The `eval.sh` bash file automatically runs all operations for reproducing the experimental data.
 
@@ -44,8 +42,8 @@ The reference data is generated using the [openCARP](https://opencarp.org/) simu
 Clone the repository using the following command:
 
 ```bash
-git clone https://github.com/tomstrident/PIE-Model-Material
-cd PIE-Model-Material
+git clone https://github.com/medunigraz/PIE-Model-Experiments.git
+cd PIE-Model-Experiments
 ```
 
 If available, place the unzipped `setups` and `calibration` directories from [Zenodo](https://doi.org/10.5281/zenodo.17198150) into the root directory of the repository.
