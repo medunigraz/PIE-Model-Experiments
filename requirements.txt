@@ -1,0 +1,8 @@
+python==3.12
+pip==25.1
+matplotlib==3.10.0
+numpy==2.2.6
+scikit-image==0.25.2
+scikit-learn==1.7.1
+scipy==1.15.3
+setuptools==72.1.0

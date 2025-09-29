@@ -1,0 +1,484 @@
+{
+  "config": {
+    "healthy": {
+      "func": "healthy-250um",
+      "tags": [
+        1
+      ]
+    }
+  },
+  "functions": {
+    "healthy-250um": {
+      "CV": {
+        "CVres-file": "../../calibration/CVr_healthy-250um_bcl_600.0.dat",
+        "CVmeas": {
+          "vf": 0.8532996928462424,
+          "vn": 0.4732008719483188,
+          "vs": 0.4732008719483188
+        },
+        "CVref": {
+          "vf": 0.8533,
+          "vn": 0.4732,
+          "vs": 0.4732
+        },
+        "G": {
+          "gel": 1.1565815844456393,
+          "gen": 1.0432306316541713,
+          "get": 1.0432306316541713,
+          "gil": 0.32199231310966603,
+          "gin": 0.08398890678571717,
+          "git": 0.08398890678571717,
+          "surf2vol": 0.14
+        }
+      },
+      "EP": {
+        "space-constant": {
+          "lf": 1.5328337403051826,
+          "ln": 0.9671839857378135,
+          "ls": 0.9671839857378135
+        },
+        "AP-file": "../../calibration/AP_healthy-250um_tenTusscherPanfilov_bcl_600.0.dat",
+        "APDres-file": "../../calibration/APDr_healthy-250um_tenTusscherPanfilov_bcl_600.0.dat",
+        "apd": 297.25,
+        "bcl": 600.0,
+        "cycles": 100,
+        "init": "../../calibration/healthy-250um_tenTusscherPanfilov_bcl_600.0.sv",
+        "init-sv": null,
+        "model": "tenTusscherPanfilov",
+        "modelpar": null,
+        "plugin-par": null,
+        "plugins": null
+      }
+    }
+  },
+  "electrodes": {
+    "version": 2,
+    "definitions": {
+      "E0": {
+        "p0": [
+          -1.0,
+          -1.0,
+          -1.0
+        ],
+        "p1": [
+          1.0,
+          10001.0,
+          2001.0
+        ],
+        "type": "block"
+      }
+    }
+  },
+  "solver": {
+    "dt": 25.0,
+    "dx": 250.0,
+    "beqm": true,
+    "fixge": false,
+    "lumping": false,
+    "opsplit": true,
+    "source_model": "monodomain",
+    "tolerance": 1e-09,
+    "ts": 1,
+    "dtsubstep": 1,
+    "sourceModel": "monodomain",
+    "stol": 1e-06
+  },
+  "protocols": {
+    "version": 2,
+    "apd_restitution": {
+      "s1s2": {
+        "type": "S1S2",
+        "bcl": 600.0,
+        "CI0": 50.0,
+        "CI1": 600.0,
+        "pp_beats": 20,
+        "pm_beats": 5,
+        "pm_dec": 10
+      }
+    },
+    "prepacing": {
+      "pp": {
+        "propagation": "rd",
+        "bcl": 600,
+        "num_cycles": 3,
+        "lat_file": "/home/tom/workspace/ncs-pie-data/results/sim/2_restitution/rd_250um/lat/init_acts_vm_act_seq.dat-thresh.dat",
+        "restart": "/home/tom/workspace/ncs-pie-data/results/sim/2_restitution/rd_250um/prp/prepaced.1800.0.roe",
+        "electrodes": [
+          "E0"
+        ],
+        "rel_timings": [
+          0.0
+        ]
+      }
+    }
+  },
+  "simulation": {
+    "autoupdate": 0,
+    "drawblock": 1,
+    "drawstim": 1,
+    "end time": 5000.0,
+    "gridout_e": 0,
+    "gridout_i": 2,
+    "log timestep": 1.0,
+    "output timestep": 1.0,
+    "preview timestep": 1.0,
+    "sim ext type": 0,
+    "sim type": 0,
+    "solvertype": 1,
+    "start time": 0.0,
+    "stimuli": {
+      "S0": {
+        "active": 1,
+        "electrode": {
+          "domain": "myocardium only",
+          "p0": [
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "p1": [
+            1.0,
+            10001.0,
+            2001.0
+          ],
+          "type": "block"
+        },
+        "protocol": {
+          "bcl": 500.0,
+          "duration": 2.0,
+          "npls": 1,
+          "start": 0.0
+        },
+        "strength": 10.0,
+        "type": "Transmembrane Voltage clamp"
+      },
+      "S1": {
+        "active": 1,
+        "electrode": {
+          "domain": "myocardium only",
+          "p0": [
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "p1": [
+            1.0,
+            10001.0,
+            2001.0
+          ],
+          "type": "block"
+        },
+        "protocol": {
+          "bcl": 475.0,
+          "duration": 2.0,
+          "npls": 1,
+          "start": 500.0
+        },
+        "strength": 10.0,
+        "type": "Transmembrane Voltage clamp"
+      },
+      "S2": {
+        "active": 1,
+        "electrode": {
+          "domain": "myocardium only",
+          "p0": [
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "p1": [
+            1.0,
+            10001.0,
+            2001.0
+          ],
+          "type": "block"
+        },
+        "protocol": {
+          "bcl": 450.0,
+          "duration": 2.0,
+          "npls": 1,
+          "start": 975.0
+        },
+        "strength": 10.0,
+        "type": "Transmembrane Voltage clamp"
+      },
+      "S3": {
+        "active": 1,
+        "electrode": {
+          "domain": "myocardium only",
+          "p0": [
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "p1": [
+            1.0,
+            10001.0,
+            2001.0
+          ],
+          "type": "block"
+        },
+        "protocol": {
+          "bcl": 425.0,
+          "duration": 2.0,
+          "npls": 1,
+          "start": 1425.0
+        },
+        "strength": 10.0,
+        "type": "Transmembrane Voltage clamp"
+      },
+      "S4": {
+        "active": 1,
+        "electrode": {
+          "domain": "myocardium only",
+          "p0": [
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "p1": [
+            1.0,
+            10001.0,
+            2001.0
+          ],
+          "type": "block"
+        },
+        "protocol": {
+          "bcl": 400.0,
+          "duration": 2.0,
+          "npls": 1,
+          "start": 1850.0
+        },
+        "strength": 10.0,
+        "type": "Transmembrane Voltage clamp"
+      },
+      "S5": {
+        "active": 1,
+        "electrode": {
+          "domain": "myocardium only",
+          "p0": [
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "p1": [
+            1.0,
+            10001.0,
+            2001.0
+          ],
+          "type": "block"
+        },
+        "protocol": {
+          "bcl": 375.0,
+          "duration": 2.0,
+          "npls": 1,
+          "start": 2250.0
+        },
+        "strength": 10.0,
+        "type": "Transmembrane Voltage clamp"
+      },
+      "S6": {
+        "active": 1,
+        "electrode": {
+          "domain": "myocardium only",
+          "p0": [
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "p1": [
+            1.0,
+            10001.0,
+            2001.0
+          ],
+          "type": "block"
+        },
+        "protocol": {
+          "bcl": 350.0,
+          "duration": 2.0,
+          "npls": 1,
+          "start": 2625.0
+        },
+        "strength": 10.0,
+        "type": "Transmembrane Voltage clamp"
+      },
+      "S7": {
+        "active": 1,
+        "electrode": {
+          "domain": "myocardium only",
+          "p0": [
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "p1": [
+            1.0,
+            10001.0,
+            2001.0
+          ],
+          "type": "block"
+        },
+        "protocol": {
+          "bcl": 325.0,
+          "duration": 2.0,
+          "npls": 1,
+          "start": 2975.0
+        },
+        "strength": 10.0,
+        "type": "Transmembrane Voltage clamp"
+      },
+      "S8": {
+        "active": 1,
+        "electrode": {
+          "domain": "myocardium only",
+          "p0": [
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "p1": [
+            1.0,
+            10001.0,
+            2001.0
+          ],
+          "type": "block"
+        },
+        "protocol": {
+          "bcl": 300.0,
+          "duration": 2.0,
+          "npls": 1,
+          "start": 3300.0
+        },
+        "strength": 10.0,
+        "type": "Transmembrane Voltage clamp"
+      },
+      "S9": {
+        "active": 1,
+        "electrode": {
+          "domain": "myocardium only",
+          "p0": [
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "p1": [
+            1.0,
+            10001.0,
+            2001.0
+          ],
+          "type": "block"
+        },
+        "protocol": {
+          "bcl": 275.0,
+          "duration": 2.0,
+          "npls": 1,
+          "start": 3600.0
+        },
+        "strength": 10.0,
+        "type": "Transmembrane Voltage clamp"
+      },
+      "S10": {
+        "active": 1,
+        "electrode": {
+          "domain": "myocardium only",
+          "p0": [
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "p1": [
+            1.0,
+            10001.0,
+            2001.0
+          ],
+          "type": "block"
+        },
+        "protocol": {
+          "bcl": 250.0,
+          "duration": 2.0,
+          "npls": 1,
+          "start": 3875.0
+        },
+        "strength": 10.0,
+        "type": "Transmembrane Voltage clamp"
+      },
+      "S11": {
+        "active": 1,
+        "electrode": {
+          "domain": "myocardium only",
+          "p0": [
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "p1": [
+            1.0,
+            10001.0,
+            2001.0
+          ],
+          "type": "block"
+        },
+        "protocol": {
+          "bcl": 225.0,
+          "duration": 2.0,
+          "npls": 1,
+          "start": 4125.0
+        },
+        "strength": 10.0,
+        "type": "Transmembrane Voltage clamp"
+      },
+      "S12": {
+        "active": 1,
+        "electrode": {
+          "domain": "myocardium only",
+          "p0": [
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "p1": [
+            1.0,
+            10001.0,
+            2001.0
+          ],
+          "type": "block"
+        },
+        "protocol": {
+          "bcl": 200.0,
+          "duration": 2.0,
+          "npls": 1,
+          "start": 4350.0
+        },
+        "strength": 10.0,
+        "type": "Transmembrane Voltage clamp"
+      },
+      "S13": {
+        "active": 1,
+        "electrode": {
+          "domain": "myocardium only",
+          "p0": [
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "p1": [
+            1.0,
+            10001.0,
+            2001.0
+          ],
+          "type": "block"
+        },
+        "protocol": {
+          "bcl": 175.0,
+          "duration": 2.0,
+          "npls": 1,
+          "start": 4550.0
+        },
+        "strength": 10.0,
+        "type": "Transmembrane Voltage clamp"
+      }
+    },
+    "use PT": 1,
+    "visibletags": 0
+  }
+}

@@ -1,0 +1,53 @@
+# Ignore everything
+/*
+
+# Large media files
+*.mp4
+*.tiff
+*.avi
+*.flv
+*.mov
+*.wmv
+*.png
+*.pdf
+
+# Mesh files
+*.belem
+*.blon
+*.bpts
+*.elem
+*.lon
+*.pts
+*.vec
+*.vpts
+*.fcon
+*.eidx
+*.nod
+*.vtk
+*.pts_t
+
+# Simulation files
+*.igb
+*.ens
+*.case
+*.vtx
+*.dbc
+
+# Misc
+*.pyc
+*.7z
+
+# Except
+!.gitignore
+!calibration/
+!scripts/
+!setups/
+!setups/5_isthmus/mesh_1000um/mesh_1000um.belem
+!setups/5_isthmus/mesh_1000um/mesh_1000um.bpts
+!setups/5_isthmus/mesh_1000um/mesh_1000um.blon
+setups/7_wholeheart/mesh_250um/
+setups/7_wholeheart/mesh_1000um/
+!eval.sh
+!clean.sh
+!README.md
+!requirements.txt
