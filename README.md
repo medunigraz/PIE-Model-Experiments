@@ -57,7 +57,21 @@ Running the following command creates the `results` output directory reproduces 
 ./eval.sh -np=32
 ```
 
-where the option `-np=<int>` allows to specify the number of threads used for computation. Reproducing all results, except the whole-heart model reference, should require roughly 15 minutes to compute on a desktop computer. Computing the reference data for the human whole-heart experiment requires multiple hours, even with substantial computational resources. Our results were computed on the [Austrian Scientific Cluster](https://www.vsc.ac.at/home/). Run the following command to clean the repository:
+where the option `-np=<int>` allows to specify the number of threads used for computation. Reproducing all results, except the whole-heart model reference, should require roughly 15 minutes to compute on a desktop computer. 
+
+https://github.com/user-attachments/assets/2b095eff-7b4e-4563-9c9f-26243b9b0e34
+
+https://github.com/user-attachments/assets/32d53dd7-4e9e-4f32-bba9-1212fbefb81b
+
+Computing the reference data for the human whole-heart experiment requires multiple hours, even with substantial computational resources. Our results were computed on the [Austrian Scientific Cluster](https://www.vsc.ac.at/home/). 
+
+Whole-Heart|RD|PIE
+--|--|--
+<video src="https://github.com/user-attachments/assets/7dd3cb17-6cd6-4294-b481-1c3a869e1a08"></video> | <video src="https://github.com/user-attachments/assets/531b9096-f8f4-4603-a5ab-9af21fb2ea4f"></video> | <video src="https://github.com/user-attachments/assets/2bf40b8d-b9c2-4ff2-b8f9-98b26a73b1ca"></video>
+
+https://github.com/user-attachments/assets/57e08210-89df-4337-9818-85d20d2e2e83
+
+Run the following command to clean the repository:
 
 ```bash
 ./clean.sh
