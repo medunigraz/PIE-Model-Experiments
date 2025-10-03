@@ -236,40 +236,40 @@
     "lfsetup": {
         "leadfields": {
             "LA": {
-                "file": "./mesh_1000um/leadfields/grfnc_ref_203716_src_502185.dat",
-                "srcvtx": 502185
+                "file": "./mesh_1000um/leadfields/grfnc_ref_347195_src_385581.dat",
+                "srcvtx": 385581
             },
             "LL": {
-                "file": "./mesh_1000um/leadfields/grfnc_ref_203716_src_203616.dat",
-                "srcvtx": 203616
+                "file": "./mesh_1000um/leadfields/grfnc_ref_347195_src_383756.dat",
+                "srcvtx": 383756
             },
             "RA": {
-                "file": "./mesh_1000um/leadfields/grfnc_ref_203716_src_1766672.dat",
-                "srcvtx": 1766672
+                "file": "./mesh_1000um/leadfields/grfnc_ref_347195_src_356490.dat",
+                "srcvtx": 356490
             },
             "V1": {
-                "file": "./mesh_1000um/leadfields/grfnc_ref_203716_src_200610.dat",
-                "srcvtx": 200610
+                "file": "./mesh_1000um/leadfields/grfnc_ref_347195_src_363513.dat",
+                "srcvtx": 363513
             },
             "V2": {
-                "file": "./mesh_1000um/leadfields/grfnc_ref_203716_src_187580.dat",
-                "srcvtx": 187580
+                "file": "./mesh_1000um/leadfields/grfnc_ref_347195_src_374382.dat",
+                "srcvtx": 374382
             },
             "V3": {
-                "file": "./mesh_1000um/leadfields/grfnc_ref_203716_src_229097.dat",
-                "srcvtx": 229097
+                "file": "./mesh_1000um/leadfields/grfnc_ref_347195_src_379600.dat",
+                "srcvtx": 379600
             },
             "V4": {
-                "file": "./mesh_1000um/leadfields/grfnc_ref_203716_src_189254.dat",
-                "srcvtx": 189254
+                "file": "./mesh_1000um/leadfields/grfnc_ref_347195_src_384250.dat",
+                "srcvtx": 384250
             },
             "V5": {
-                "file": "./mesh_1000um/leadfields/grfnc_ref_203716_src_176910.dat",
-                "srcvtx": 176910
+                "file": "./mesh_1000um/leadfields/grfnc_ref_347195_src_389764.dat",
+                "srcvtx": 389764
             },
             "V6": {
-                "file": "./mesh_1000um/leadfields/grfnc_ref_203716_src_455294.dat",
-                "srcvtx": 455294
+                "file": "./mesh_1000um/leadfields/grfnc_ref_347195_src_391191.dat",
+                "srcvtx": 391191
             }
         },
         "potential_order": [
@@ -336,11 +336,12 @@
                 "plot": true
             }
         },
-        "refvtx": 203716
+        "refvtx": 347195
     },
   "simulation": {
     "autoupdate": 0,
     "drawblock": 1,
+    "drate": 1.0,
     "drawstim": 1,
     "end time": 5000.0,
     "timesteps": 5000,
@@ -372,8 +373,8 @@
           "type": "cylinder"
         },
         "protocol": {
-          "bcl": 345.0,
-          "duration": 345.0,
+          "bcl": 340.0,
+          "duration": 340.0,
           "npls": 1,
           "start": 0.0
         },

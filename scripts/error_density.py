@@ -10,12 +10,10 @@ import matplotlib.gridspec as gs
 from scipy.stats import gaussian_kde
 from carputils.carpio import igb
 
-
 # _________________________________________________________________________________________________
-def read_igb_file(filepath):
+def read_igb_file(filepath, tmax=11):
   data, _, _ = igb.read(filepath)
-  return data[:,:11].ravel()
-
+  return data[:,:tmax].ravel()
 
 # _________________________________________________________________________________________________
 def main(args):
@@ -50,8 +48,8 @@ def main(args):
   # plot visualization
   ax = []
   rows, cols = (1, 3)
-  plt.rc('text', usetex=True)
-  plt.rc('font', family='Times New Roman', size=14)
+  #plt.rc('text', usetex=True)
+  #plt.rc('font', family='Times New Roman', size=14)
   fig = plt.figure(figsize=(12, 2))
   grd = gs.GridSpec(rows, cols)
   latex_str = sim_id
@@ -62,7 +60,6 @@ def main(args):
       ax.append(fig.add_subplot(grd[row, col]))
 
       pdata = all_data[col]
-      print(pdata.shape)
       xmin, xmax = data_ranges[col]
       xx = np.linspace(xmin, xmax, n_points)
       ax[it].xaxis.set_major_locator(plt.MaxNLocator(5))
@@ -77,7 +74,6 @@ def main(args):
       ax[it].set_xticks(xrange)
       ax[it].set_xticklabels(xrange_labels)
 
-      #d = np.clip(pdata, xmin, xmax)
       d = pdata
       pdf = gaussian_kde(d)
       curve = pdf(xx)
@@ -88,6 +84,7 @@ def main(args):
       rmse = np.sqrt(np.mean(d**2))
       vmin = np.amin(d)
       vmax = np.amax(d)
+
       print("{}:\tMEAN: {:.3f} STD: {:.3f} RMSE: {:.3f} ... MIN: {:.3f} MAX: {:.3f}".format(data_label[col], mean, std, rmse, vmin, vmax))
       latex_str += " & ${:.3f}$ & ${:.3f}$ & ${:.3f}$".format(mean, std, rmse)
 

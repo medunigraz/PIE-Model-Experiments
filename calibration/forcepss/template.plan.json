@@ -1,0 +1,160 @@
+{
+  "functions": {
+    "bz-250um": {
+      "CV": {
+        "CVres-file": null,
+        "CVmeas": {
+          "vf": 0.6,
+          "vs": 0.3,
+          "vn": 0.3
+        },
+        "CVref": {
+          "vf": 0.5909,
+          "vs": 0.1072,
+          "vn": 0.1072
+        },
+        "G": {
+          "gel": 0.625,
+          "gen": 0.236,
+          "get": 0.236,
+          "gil": 0.174,
+          "gin": 0.019,
+          "git": 0.019,
+          "surf2vol": 0.14
+        }
+      },
+      "EP": {
+        "AP-file": null,
+        "APDres-file": null,
+        "apd": 360.0,
+        "bcl": 600.0,
+        "cycles": 100,
+        "init": null,
+        "init-sv": null,
+        "model": "tenTusscherPanfilov",
+        "modelpar": "GNa-62%,GCaL-69%,GKr-70%,GKs-80%",
+        "plugin-par": null,
+        "plugins": null
+      }
+    },
+    "healthy-250um": {
+      "CV": {
+        "CVres-file": null,
+        "CVmeas": {
+          "vf": 0.6,
+          "vs": 0.3,
+          "vn": 0.3
+        },
+        "CVref": {
+          "vf": 0.8533,
+          "vs": 0.4732,
+          "vn": 0.4732
+        },
+        "G": {
+          "gel": 0.625,
+          "gen": 0.236,
+          "get": 0.236,
+          "gil": 0.174,
+          "gin": 0.019,
+          "git": 0.019,
+          "surf2vol": 0.14
+        }
+      },
+      "EP": {
+        "AP-file": null,
+        "APDres-file": null,
+        "apd": 300.0,
+        "bcl": 600.0,
+        "cycles": 100,
+        "init": null,
+        "init-sv": null,
+        "model": "tenTusscherPanfilov",
+        "modelpar": null,
+        "plugin-par": null,
+        "plugins": null
+      }
+    }
+  },
+  "solver": {
+    "dt": 25.0,
+    "dx": 250.0,
+    "beqm": true,
+    "fixge": false,
+    "lumping": false,
+    "opsplit": true,
+    "source_model": "monodomain",
+    "tolerance": 1e-09,
+    "ts": 1,
+    "dtsubstep": 1
+  },
+  "protocols": {
+    "version": 2,
+    "apd_restitution": {
+      "s1s2": {
+        "type": "S1S2",
+        "bcl": 600.0,
+        "CI0": 50.0,
+        "CI1": 600.0,
+        "pp_beats": 20,
+        "pm_beats": 5,
+        "pm_dec": 10
+      }
+    },
+    "prepacing": {
+      "pp": {
+        "propagation": "rd",
+        "bcl": 600,
+        "num_cycles": 3,
+        "lat_file": null,
+        "restart": null,
+        "electrodes": [
+          "E0"
+        ],
+        "rel_timings": [
+          0.0
+        ]
+      }
+    }
+  },
+  "simulation": {
+    "autoupdate": 0,
+    "drawblock": 1,
+    "drawstim": 1,
+    "end time": 100.0,
+    "timesteps": 100,
+    "deltatime": 1.0,
+    "gridout_e": 0,
+    "gridout_i": 0,
+    "igboutput": "./",
+    "log timestep": 1.0,
+    "output timestep": 1.0,
+    "preview timestep": 1.0,
+    "solvertype": 1,
+    "start time": 0.0,
+    "stimuli": {
+      "S0": {
+        "active": true,
+        "electrode": {
+          "domain": "myocardium only",
+          "p0": [
+            122396.0,
+            9307.16,
+            -198924.0
+          ],
+          "radius": 2001.0,
+          "type": "sphere"
+        },
+        "protocol": {
+          "bcl": 330.0,
+          "duration": 5.0,
+          "npls": 2,
+          "start": 0.0
+        },
+        "strength": 0.0,
+        "type": "Transmembrane Voltage clamp"
+      }
+    },
+    "use PT": 1,
+    "visibletags": 0
+  }
+}

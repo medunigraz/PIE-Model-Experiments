@@ -1,23 +1,16 @@
 #!/bin/bash
-# TODO:
-# - visualize_calibration.py
-# - error_density.py
-# - phase_singularitiy_tracking.py
-# - ecg_comparison.py
-# - ecg_animation.py
 
-# external tools ==============================================================
+# Executables =====================================================================================
 PIE_EXE=pie-solver
 MT_EXE=meshtool
 P3_EXE=python3
 CARP_EXE=openCARP
-GIZMO_EXE=gizmo
 
-# Variables ===================================================================
+# Default Variables ===============================================================================
 NP=32
 FEM_THRESH="400"
-TESTCASES=("A2_functional") # "A1_anatomical" "A2_functional" "A3_wholeheart" "B1_restitution" "B2_curvature" "B3_diffusion"
 
+declare -a TESTCASES=("A1_anatomical" "A2_functional" "A3_wholeheart" "B1_restitution" "B2_curvature" "B3_diffusion")
 declare -a RES_RD_UM=("250")
 declare -a RES_PIE_UM=("1000")
 
@@ -107,11 +100,10 @@ function compare_rd_pie {
   done
 
   $MT_EXE collect -imsh=$MSH_PIE -omsh="${ENS_COMP}/compare.case" $NOD_DATA -ifmt=carp_bin -ofmt=ens_bin
-  $P3_EXE ./scripts/error-density.py --compdir=$SIM_COMP --outdir=$SIM
+  $P3_EXE ./scripts/error_density.py --compdir=$SIM_COMP --outdir=$SIM
 }
 
 # Parse Inputs ====================================================================================
-#-exp=...
 for i in "$@"
 do
 case $i in
@@ -125,15 +117,15 @@ case $i in
 esac
 done
 
-# Calibration =================================================================
-if false; then 
+# Calibration =====================================================================================
+if true; then 
   $PIE_EXE --tune --pln=./calibration/forcepss/template.plan.json --out=./calibration/forcepss/tune --verb --np=$NP
-  $P3_EXE ./scripts/visualize-calibration.py --pln=./calibration/forcepss/tune/calibrated-functions.plan.json
+  $P3_EXE ./scripts/visualize_calibration.py --pln=./calibration/forcepss/tune/calibrated-functions.plan.json --odir=./calibration/
   #cp -a ./calibration/forcepss/tune/calibration/. ./calibration/
 fi
 
-# Evaluate ====================================================================
-for TESTCASE in $TESTCASES; do
+# Evaluate ========================================================================================
+for TESTCASE in "${TESTCASES[@]}"; do
   SETUP_DIR="./setups/${TESTCASE}/"
   SIM_DIR="./results/sim/${TESTCASE}"
   ENS_DIR="./results/ens/${TESTCASE}"
@@ -163,7 +155,7 @@ for TESTCASE in $TESTCASES; do
         $MT_EXE convert -imsh=$MSH_PATH -ifmt=carp_bin -omsh=$MSH_PATH -ofmt vtk_bin
       fi
 
-      #if [ ! -d $SIM_RD ]; then
+      if [ ! -d $SIM_RD ]; then
         create_dir $SIM_RD
 
         $PIE_EXE --pln2par --msh=$MSH_PATH --pln=$PLN_PATH --out=$SIM_RD --verb
@@ -173,12 +165,12 @@ for TESTCASE in $TESTCASES; do
 
         $P3_EXE ./scripts/apply_tstart_offset.py --msh=$MSH_PATH --dat="${SIM_RD}/sim/lats-thresh.dat" --offset=1800 --out="${SIM_RD}/sim/lats-thresh-2.dat"
         $P3_EXE ./scripts/apply_tstart_offset.py --msh=$MSH_PATH --dat="${SIM_RD}/sim/lrts-thresh.dat" --offset=1800 --out="${SIM_RD}/sim/lrts-thresh-2.dat"
-      #fi
+      fi
 
-      #if [ ! -d $ENS_RD ]; then
+      if [ ! -d $ENS_RD ]; then
         create_dir $ENS_RD
         $MT_EXE collect -imsh=$MSH_PATH -omsh="${ENS_RD}/rd_data" -nod="${SIM_RD}/sim/vm.igb" -ifmt=carp_bin -ofmt=ens_bin
-      #fi
+      fi
     done
   fi
 
@@ -193,6 +185,26 @@ for TESTCASE in $TESTCASES; do
         $P3_EXE ./scripts/meshgen.py --msh=$TESTCASE --res=$RES_UM --out=$SETUP_DIR
         $MT_EXE convert -imsh=$MSH_PATH -ifmt=carp_bin -omsh=$MSH_PATH -ofmt vtk_bin
       fi
+
+      # output map options
+      # 1: <reserved>
+      # 2: tAp [ms]
+      # 3: <reserved>
+      # 4: APD_90 [ms]
+      # 5: DI [ms]
+      # 6: Vm [mV]
+      # 7: FSM states [0-8]
+      # 8: ta [ms]
+
+      # output options are encoded as 8-bit:
+      #      8765 4321
+      # 0   (0000 0000): no output
+      # 32  (0010 0000): Vm only (default)
+      # 96  (0110 0000): Vm and FSM states
+      # 224 (1110 0000): Vm, FSM states and ta
+      # 255 (1111 1111): all
+
+      # LAT and LRT maps are always generated
       
       if [ "$TESTCASE" = "A1_anatomical" ]; then
         run_pie $TESTCASE $RES_UM $MSH_PATH $PLN_PATH $SIM_DIR $ENS_DIR "--verb --np=$NP --dat=32"
@@ -200,11 +212,10 @@ for TESTCASE in $TESTCASES; do
         run_pie $TESTCASE $RES_UM $MSH_PATH $PLN_PATH $SIM_DIR $ENS_DIR "--verb --np=$NP --dat=32"
       elif [ "$TESTCASE" = "A3_wholeheart" ]; then
         run_pie $TESTCASE $RES_UM $MSH_PATH $PLN_PATH $SIM_DIR $ENS_DIR "--verb --np=$NP --dat=32"
-        $GIZMO_EXE --model-name $MSH_PATH --model-format carp_bin --sim-plan $PLN_PATH --extern-vm "/home/tom/workspace/eikonal-experiments/results/sim/7_whole-heart/pie_2000um/vm_mv.igb" --trace-output json --lin-solver amgcl --output-dir 'wholeheartecgs' --verbose --np $NP
       elif [ "$TESTCASE" = "B1_restitution" ]; then
-        #run_pie $TESTCASE $RES_UM $MSH_PATH $PLN_PATH $SIM_DIR $ENS_DIR "--verb --np=$NP --no-cvr --no-apdr --no-curv --no-dif --dat=32" "00"
-        #run_pie $TESTCASE $RES_UM $MSH_PATH $PLN_PATH $SIM_DIR $ENS_DIR "--verb --np=$NP --no-cvr --no-curv --no-dif --dat=32" "01"
-        #run_pie $TESTCASE $RES_UM $MSH_PATH $PLN_PATH $SIM_DIR $ENS_DIR "--verb --np=$NP --no-apdr --no-curv --no-dif --dat=32" "10"
+        run_pie $TESTCASE $RES_UM $MSH_PATH $PLN_PATH $SIM_DIR $ENS_DIR "--verb --np=$NP --no-cvr --no-apdr --no-curv --no-dif --dat=32" "00"
+        run_pie $TESTCASE $RES_UM $MSH_PATH $PLN_PATH $SIM_DIR $ENS_DIR "--verb --np=$NP --no-cvr --no-curv --no-dif --dat=32" "01"
+        run_pie $TESTCASE $RES_UM $MSH_PATH $PLN_PATH $SIM_DIR $ENS_DIR "--verb --np=$NP --no-apdr --no-curv --no-dif --dat=32" "10"
         run_pie $TESTCASE $RES_UM $MSH_PATH $PLN_PATH $SIM_DIR $ENS_DIR "--verb --np=$NP --no-curv --no-dif --dat=32 --prep" "11"
       elif [ "$TESTCASE" = "B2_curvature" ]; then
         run_pie $TESTCASE $RES_UM $MSH_PATH $PLN_PATH $SIM_DIR $ENS_DIR "--verb --np=$NP --no-dif --dat=32"
@@ -218,7 +229,7 @@ for TESTCASE in $TESTCASES; do
   fi
 
   # Compare RD and PIE Results -------------------------------------------------
-  if false; then
+  if true; then
     for RES_RD in "${RES_RD_UM[@]}"; do
       for RES_PIE in "${RES_PIE_UM[@]}"; do
         if   [ "$TESTCASE" = "B1_restitution" ]; then
@@ -226,13 +237,20 @@ for TESTCASE in $TESTCASES; do
         elif [ "$TESTCASE" = "B2_curvature" ] || [ "$TESTCASE" = "B3_diffusion" ]; then
           compare_rd_pie $RES_RD $RES_PIE $SETUP_DIR $SIM_DIR $ENS_DIR
         elif [ "$TESTCASE" = "A2_functional" ]; then
-          $P3_EXE ./scripts/phase_singularitiy_tracking.py
+          $P3_EXE ./scripts/track_phase_singularity.py --idir=$SIM_DIR --model=rd  --odir=./results/png/A2_functional
+          $P3_EXE ./scripts/track_phase_singularity.py --idir=$SIM_DIR --model=pie --odir=./results/png/A2_functional
         elif [ "$TESTCASE" = "A3_wholeheart" ]; then
-          $P3_EXE ./scripts/ecg_comparison.py
-          $P3_EXE ./scripts/ecg_animation.py
+          $P3_EXE ./scripts/ecg_comparison.py ./results/ecg/ecg_rd_250um.json ./results/ecg/ecg_pie_1000um.json
         fi
       done
     done
   fi
 done
+
+# Performance Scaling =============================================================================
+if true; then
+  PERF_DIR="./results/sim/A4_scaling"
+  create_dir $PERF_DIR
+  $P3_EXE ./scripts/performance_scaling.py --mode RD,PIE --res 250 --dstart 250 --dend 7000 --dstep 250 --np $NP --plot --outdir $PERF_DIR
+fi
 

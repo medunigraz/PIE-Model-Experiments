@@ -3,12 +3,13 @@ This repository provides a guide and the necessary resources for reproducing the
 
 ## Description
 The `setups` directory contains the six experimental setups from the study:
-* A1_anatomical: an anatomical reentry is simulated by pacing below an isthmus-shaped scar using an S1-S2 protocol.
-* A2_functional: a functional reentry is induced by stimulating a patch of tissue that overlaps with the waveback of a preceding planar wave front.
-* A3_wholeheart: a scar-induced ventricular tachycardia is simulated in an anatomically detailed human whole heart model. 
-* B1_restitution: the left-hand face of a strip of healthy tissue is paced with a dynamic pacing protocol to investigate APD and CV restitution properties.
-* B2_curvature: concave and convex wave fronts are induced in healthy tissue to investigate curvature properties.
-* B3_diffusion: an interface between healthy and borderzone tissue types is paced at the bottom to investigate diffusion properties.
+* `A1_anatomical`: an anatomical reentry is simulated by pacing below an isthmus-shaped scar using an S1-S2 protocol.
+* `A2_functional`: a functional reentry is induced by stimulating a patch of tissue that overlaps with the waveback of a preceding planar wave front.
+* `A3_wholeheart`: a scar-induced ventricular tachycardia is simulated in an anatomically detailed human whole heart model. 
+* `A4_scaling`: the left-hand face of a tissue patch with varying depth is constantly paced to assess computational scaling properties. 
+* `B1_restitution`: the left-hand face of a strip of healthy tissue is paced with a dynamic pacing protocol to investigate APD and CV restitution properties.
+* `B2_curvature`: concave and convex wave fronts are induced in healthy tissue to investigate curvature properties.
+* `B3_diffusion`: an interface between healthy and borderzone tissue types is paced at the bottom to investigate diffusion properties.
 
 Each setup consists of a simulation plan in `.json` format and directories with mesh files in 250um and 1000um resolution stored in both binary carp and VTK formats. The binary carp meshes can be visualized in [NumeriCor Studio](https://numericor.at/rlb/wordpress/products/#ProdStudio) while the VTK meshes can be visualized in [ParaView](https://www.paraview.org/). The human whole-heart experiment was derived from [1] and additionally contains a directory with the lead-field data required for ECG reconstruction. 
 
@@ -18,11 +19,14 @@ The `calibration` directory contains files that represent captured physiological
 
 The `scripts` directory contains a collection of python scripts to generate, process or visualize the experimental data:
 * `meshgen.py`: performs automatic mesh generation for each experiment in case of absence.
-* `visualize-calibration.py`: visualizes the calibration results.
+* `visualize_calibration.py`: visualizes the calibration results.
 * `apply_tstart_offset.py`: corrects the timing offset of LAT files caused by prepacing.
-* `error-density.py`: plots KDEs of LAT, CV and LRT error density maps for a given setup.
-* `phase_singularitiy_tracking.py`: performs phase singularity tracking and visualization.
+* `error_density.py`: plots KDEs of LAT, CV and LRT error density maps for a given setup.
+* `track_phase_singularity.py`: performs phase singularity tracking and visualization.
 * `ecg_comparison.py`: visualizes computed ECGs.
+* `performance_scaling.py`: conducts the performance scaling experiment using the `A4_scaling` benchmark.
+
+The `results` directory contains the computed experimental data, including simulation data `sim`, paraview ensight visualizations `ens`, rendered images `png` and computed ECGs `ecg`.
 
 The `eval.sh` bash file automatically runs all operations for reproducing the experimental data.
 
@@ -57,7 +61,21 @@ Running the following command creates the `results` output directory reproduces 
 ./eval.sh -np=32
 ```
 
-where the option `-np=<int>` allows to specify the number of threads used for computation. Reproducing all results, except the whole-heart model reference, should require roughly 15 minutes to compute on a desktop computer. Computing the reference data for the human whole-heart experiment requires multiple hours, even with substantial computational resources. Our results were computed on the [Austrian Scientific Cluster](https://www.vsc.ac.at/home/). Run the following command to clean the repository:
+where the option `-np=<int>` allows to specify the number of threads used for computation. Reproducing all results, except the whole-heart model reference, should require roughly 15 minutes to compute on a desktop computer. 
+
+https://github.com/user-attachments/assets/2b095eff-7b4e-4563-9c9f-26243b9b0e34
+
+https://github.com/user-attachments/assets/32d53dd7-4e9e-4f32-bba9-1212fbefb81b
+
+Computing the reference data for the human whole-heart experiment requires multiple hours, even with substantial computational resources. Our results were computed on the [Austrian Scientific Cluster](https://www.vsc.ac.at/home/). 
+
+Whole-Heart|RD|PIE
+--|--|--
+<video src="https://github.com/user-attachments/assets/7dd3cb17-6cd6-4294-b481-1c3a869e1a08"></video> | <video src="https://github.com/user-attachments/assets/531b9096-f8f4-4603-a5ab-9af21fb2ea4f"></video> | <video src="https://github.com/user-attachments/assets/2bf40b8d-b9c2-4ff2-b8f9-98b26a73b1ca"></video>
+
+https://github.com/user-attachments/assets/57e08210-89df-4337-9818-85d20d2e2e83
+
+Run the following command to clean the repository:
 
 ```bash
 ./clean.sh
