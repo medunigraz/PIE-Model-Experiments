@@ -4,7 +4,7 @@
 PIE_EXE=pie-solver
 MT_EXE=meshtool
 P3_EXE=python3
-CARP_EXE=openCARP
+CARP_EXE=openCARP # or openCARP.opt
 
 # Default Variables ===============================================================================
 NP=32
@@ -14,7 +14,7 @@ declare -a TESTCASES=("A1_anatomical" "A2_functional" "A3_wholeheart" "B1_restit
 declare -a RES_RD_UM=("250")
 declare -a RES_PIE_UM=("1000")
 
-# Functions ===================================================================
+# Functions =======================================================================================
 function create_dir {
   if [ ! -d $1 ]; then
     mkdir -p $1
@@ -119,7 +119,7 @@ done
 
 # Calibration =====================================================================================
 if true; then 
-  $PIE_EXE --tune --pln=./calibration/forcepss/template.plan.json --out=./calibration/forcepss/tune --verb --np=$NP
+  $PIE_EXE --tune --pln=./calibration/forcepss/template.plan.json --out=./calibration/forcepss/tune --np=$NP
   $P3_EXE ./scripts/visualize_calibration.py --pln=./calibration/forcepss/tune/calibrated-functions.plan.json --odir=./calibration/
   #cp -a ./calibration/forcepss/tune/calibration/. ./calibration/
 fi
@@ -137,7 +137,7 @@ for TESTCASE in "${TESTCASES[@]}"; do
   create_dir $SIM_DIR
   create_dir $ENS_DIR
 
-  # Launch RD Simulations -----------------------------------------------------
+  # Launch RD Simulations -------------------------------------------------------------------------
   if true; then
     for RES_UM in "${RES_RD_UM[@]}"; do
       if [ $RES_UM -gt $FEM_THRESH ]; then
@@ -155,22 +155,22 @@ for TESTCASE in "${TESTCASES[@]}"; do
         $MT_EXE convert -imsh=$MSH_PATH -ifmt=carp_bin -omsh=$MSH_PATH -ofmt vtk_bin
       fi
 
-      if [ ! -d $SIM_RD ]; then
+      #if [ ! -d $SIM_RD ]; then
         create_dir $SIM_RD
 
-        $PIE_EXE --pln2par --msh=$MSH_PATH --pln=$PLN_PATH --out=$SIM_RD --verb
+        $PIE_EXE --pln2par --msh=$MSH_PATH --pln=$PLN_PATH --out=$SIM_RD
         mpirun -np $NP $CARP_EXE +F "${SIM_RD}/lat.par"
         mpirun -np $NP $CARP_EXE +F "${SIM_RD}/prp.par"
         mpirun -np $NP $CARP_EXE +F "${SIM_RD}/sim.par"
 
         $P3_EXE ./scripts/apply_tstart_offset.py --msh=$MSH_PATH --dat="${SIM_RD}/sim/lats-thresh.dat" --offset=1800 --out="${SIM_RD}/sim/lats-thresh-2.dat"
         $P3_EXE ./scripts/apply_tstart_offset.py --msh=$MSH_PATH --dat="${SIM_RD}/sim/lrts-thresh.dat" --offset=1800 --out="${SIM_RD}/sim/lrts-thresh-2.dat"
-      fi
+      #fi
 
-      if [ ! -d $ENS_RD ]; then
+      #if [ ! -d $ENS_RD ]; then
         create_dir $ENS_RD
         $MT_EXE collect -imsh=$MSH_PATH -omsh="${ENS_RD}/rd_data" -nod="${SIM_RD}/sim/vm.igb" -ifmt=carp_bin -ofmt=ens_bin
-      fi
+      #fi
     done
   fi
 
@@ -228,7 +228,7 @@ for TESTCASE in "${TESTCASES[@]}"; do
     done
   fi
 
-  # Compare RD and PIE Results -------------------------------------------------
+  # Compare RD and PIE Results --------------------------------------------------------------------
   if true; then
     for RES_RD in "${RES_RD_UM[@]}"; do
       for RES_PIE in "${RES_PIE_UM[@]}"; do

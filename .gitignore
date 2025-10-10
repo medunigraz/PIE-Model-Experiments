@@ -38,21 +38,22 @@
 *.zip
 
 # Directories
+calibration/forcepss/tune
 results/sim
 results/ens
-setups/7_wholeheart/mesh_250um/
-setups/7_wholeheart/mesh_1000um/
-setups/7_wholeheart/mesh_250um/leadfields
-setups/7_wholeheart/mesh_1000um/leadfields
+setups/A3_wholeheart/mesh_250um/
+setups/A3_wholeheart/mesh_1000um/
+setups/A3_wholeheart/mesh_250um/leadfields
+setups/A3_wholeheart/mesh_1000um/leadfields
 
 # Except
 !.gitignore
 !calibration/
 !scripts/
 !setups/
-!setups/5_isthmus/mesh_1000um/mesh_1000um.belem
-!setups/5_isthmus/mesh_1000um/mesh_1000um.bpts
-!setups/5_isthmus/mesh_1000um/mesh_1000um.blon
+!setups/A1_anatomical/mesh_1000um/mesh_1000um.belem
+!setups/A1_anatomical/mesh_1000um/mesh_1000um.bpts
+!setups/A1_anatomical/mesh_1000um/mesh_1000um.blon
 !results/
 !eval.sh
 !clean.sh

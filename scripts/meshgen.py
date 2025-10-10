@@ -8,7 +8,6 @@ import subprocess
 
 import numpy as np
 
-
 # _________________________________________________________________________________________________
 class mesher_gen:
   def __init__(self, dimensions_cm, resolution_um, fibdir_deg, msh_filepath):
@@ -88,7 +87,7 @@ class mesher_gen:
       
     # generate mesh in carp_txt format
     dry_cmd = " ".join(self.command)
-    print(dry_cmd)
+    #print(dry_cmd)
     subprocess.run(self.command)
 
     # convert to binary
@@ -104,7 +103,6 @@ class mesher_gen:
                                               self.msh_filepath+".vec", 
                                               self.msh_filepath+".vpts")
     subprocess.run(rm_cmd.split(' '))
-
 
 # _________________________________________________________________________________________________
 def main(args):
@@ -171,7 +169,6 @@ def main(args):
     else:
       print("meshgen.py: invalid mesh ID! aborting ...")
       raise
-
 
 # _________________________________________________________________________________________________
 if __name__ == "__main__":

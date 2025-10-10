@@ -86,13 +86,12 @@ def main(args):
     # run PIE simulation
     if "PIE" in modes:
       pie_it = 0
-      pie_configs = {"a": "--no-cvr --no-apdr --no-curv --no-dif --dat=32", #"REK[-]"
-                     "b": "--no-cvr --no-curv --no-dif --dat=32", #"REK[A]"
-                     "c": "--no-apdr --no-curv --no-dif --dat=32", #"REK[C]"
-                     "d": "--no-curv --no-dif --dat=32", #"REK[AC]"
-                     "e": "--no-dif --dat=32", #"REK[RC]"
-                     "f": "--dat=32" #"REK[RCD]"
-                     }
+      pie_configs = {"a": "--no-cvr --no-apdr --no-curv --no-dif --dat=32",
+                     "b": "--no-cvr --no-curv --no-dif --dat=32",
+                     "c": "--no-apdr --no-curv --no-dif --dat=32",
+                     "d": "--no-curv --no-dif --dat=32",
+                     "e": "--no-dif --dat=32",
+                     "f": "--dat=32"}
       
       for key, flags in pie_configs.items():
         pie_outdir = "{}/PIE/{}_{:.3f}cm".format(result_dir, key, width_cm)
@@ -161,7 +160,7 @@ if __name__ == "__main__":
   parser.add_argument('--dstart',    help='start mesh depth in um.',                     type=int, default=250)
   parser.add_argument('--dend',      help='end mesh depth in um.',                       type=int, default=2500)
   parser.add_argument('--dstep',     help='step mesh depth in um.',                      type=int, default=250)
-  parser.add_argument('--np',        help='number of threads to use for the benchmark.', type=int, default=4)
+  parser.add_argument('--np',        help='number of threads to use for the benchmark.', type=int, default=32)
   parser.add_argument('--remesh',    help='flag to force mesh generation.',              action='store_true', default=False)
   parser.add_argument('--recompute', help='flag to force recomputation of all results.', action='store_true', default=False)
   parser.add_argument('--plot',      help='flag to plot the results.',                   action='store_true', default=False)

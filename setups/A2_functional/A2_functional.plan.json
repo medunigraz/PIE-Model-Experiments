@@ -101,8 +101,8 @@
         "propagation": "rd",
         "bcl": 600,
         "num_cycles": 3,
-        "lat_file": "/home/tom/workspace/ncs-pie-data/results/sim/6_rotor/rd_250um/lat/init_acts_vm_act_seq.dat-thresh.dat",
-        "restart": "/home/tom/workspace/ncs-pie-data/results/sim/6_rotor/rd_250um/prp/prepaced.1800.0.roe",
+        "lat_file": "",
+        "restart": "",
         "electrodes": [
           "E0"
         ],
@@ -116,6 +116,7 @@
     "autoupdate": 0,
     "drawblock": 1,
     "drawstim": 1,
+    "drate": 1.0,
     "end time": 5000.0,
     "gridout_e": 0,
     "gridout_i": 2,
