@@ -63,7 +63,7 @@ Running the following command creates the `results` output directory reproduces 
 
 where the option `-np=<int>` allows to specify the number of threads used for computation. Reproducing all results, except the whole-heart model reference, should require roughly 15 minutes to compute on a desktop computer. 
 
-https://github.com/user-attachments/assets/2b095eff-7b4e-4563-9c9f-26243b9b0e34
+https://github.com/user-attachments/assets/c4f291c4-4a62-4468-a736-08f7d34a5ccb
 
 https://github.com/user-attachments/assets/32d53dd7-4e9e-4f32-bba9-1212fbefb81b
 
