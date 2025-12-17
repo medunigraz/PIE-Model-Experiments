@@ -59,3 +59,4 @@ setups/A3_wholeheart/mesh_1000um/leadfields
 !clean.sh
 !README.md
 !requirements.txt
+!Dockerfile
