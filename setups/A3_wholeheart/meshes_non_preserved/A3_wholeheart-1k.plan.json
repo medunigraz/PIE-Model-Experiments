@@ -55,7 +55,7 @@
   "functions": {
     "bz-250um": {
       "CV": {
-        "CVres-file": "../../calibration/CVr_bz-250um_bcl_600.0.dat",
+        "CVres-file": "../../../calibration/CVr_bz-250um_bcl_600.0.dat",
         "CVmeas": {
           "vf": 0.5909000098503031,
           "vs": 0.10720309149702385,
@@ -82,12 +82,12 @@
           "ls": 0.515506,
           "ln": 0.515506
         },
-        "AP-file": "../../calibration/AP_bz-250um_tenTusscherPanfilov_bcl_600.0.dat",
-        "APDres-file": "../../calibration/APDr_bz-250um_tenTusscherPanfilov_bcl_600.0.dat",
+        "AP-file": "../../../calibration/AP_bz-250um_tenTusscherPanfilov_bcl_600.0.dat",
+        "APDres-file": "../../../calibration/APDr_bz-250um_tenTusscherPanfilov_bcl_600.0.dat",
         "apd": 359.36,
         "bcl": 600.0,
         "cycles": 100,
-        "init": "../../calibration/bz-250um_tenTusscherPanfilov_bcl_600.0.sv",
+        "init": "../../../calibration/bz-250um_tenTusscherPanfilov_bcl_600.0.sv",
         "init-sv": null,
         "model": "tenTusscherPanfilov",
         "modelpar": "GNa-62%,GCaL-69%,GKr-70%,GKs-80%",
@@ -97,7 +97,7 @@
     },
     "healthy-250um": {
       "CV": {
-        "CVres-file": "../../calibration/CVr_healthy-250um_bcl_600.0.dat",
+        "CVres-file": "../../../calibration/CVr_healthy-250um_bcl_600.0.dat",
         "CVmeas": {
           "vf": 0.8533000569065807,
           "vs": 0.473199998665576,
@@ -124,12 +124,12 @@
           "ls": 0.985049,
           "ln": 0.985049
         },
-        "AP-file": "../../calibration/AP_healthy-250um_tenTusscherPanfilov_bcl_600.0.dat",
-        "APDres-file": "../../calibration/APDr_healthy-250um_tenTusscherPanfilov_bcl_600.0.dat",
+        "AP-file": "../../../calibration/AP_healthy-250um_tenTusscherPanfilov_bcl_600.0.dat",
+        "APDres-file": "../../../calibration/APDr_healthy-250um_tenTusscherPanfilov_bcl_600.0.dat",
         "apd": 294.49,
         "bcl": 600.0,
         "cycles": 100,
-        "init": "../../calibration/healthy-250um_tenTusscherPanfilov_bcl_600.0.sv",
+        "init": "../../../calibration/healthy-250um_tenTusscherPanfilov_bcl_600.0.sv",
         "init-sv": null,
         "model": "tenTusscherPanfilov",
         "modelpar": null,
@@ -236,40 +236,40 @@
     "lfsetup": {
         "leadfields": {
             "LA": {
-                "file": "./mesh_1000um/leadfields/grfnc_ref_347195_src_385581.bdat",
-                "srcvtx": 385581
+                "file": "./mesh_1000um/leadfields/grfnc_ref_1237509_src_1259480.bdat",
+                "srcvtx": 1259480
             },
             "LL": {
-                "file": "./mesh_1000um/leadfields/grfnc_ref_347195_src_383756.bdat",
-                "srcvtx": 383756
+                "file": "./mesh_1000um/leadfields/grfnc_ref_1237509_src_1236968.bdat",
+                "srcvtx": 1236968
             },
             "RA": {
-                "file": "./mesh_1000um/leadfields/grfnc_ref_347195_src_356490.bdat",
-                "srcvtx": 356490
+                "file": "./mesh_1000um/leadfields/grfnc_ref_1237509_src_1125869.bdat",
+                "srcvtx": 1125869
             },
             "V1": {
-                "file": "./mesh_1000um/leadfields/grfnc_ref_347195_src_363513.bdat",
-                "srcvtx": 363513
+                "file": "./mesh_1000um/leadfields/grfnc_ref_1237509_src_1223396.bdat",
+                "srcvtx": 1223396
             },
             "V2": {
-                "file": "./mesh_1000um/leadfields/grfnc_ref_347195_src_374382.bdat",
-                "srcvtx": 374382
+                "file": "./mesh_1000um/leadfields/grfnc_ref_1237509_src_1181821.bdat",
+                "srcvtx": 1181821
             },
             "V3": {
-                "file": "./mesh_1000um/leadfields/grfnc_ref_347195_src_379600.bdat",
-                "srcvtx": 379600
+                "file": "./mesh_1000um/leadfields/grfnc_ref_1237509_src_1391684.bdat",
+                "srcvtx": 1391684
             },
             "V4": {
-                "file": "./mesh_1000um/leadfields/grfnc_ref_347195_src_384250.bdat",
-                "srcvtx": 384250
+                "file": "./mesh_1000um/leadfields/grfnc_ref_1237509_src_1185587.bdat",
+                "srcvtx": 1185587
             },
             "V5": {
-                "file": "./mesh_1000um/leadfields/grfnc_ref_347195_src_389764.bdat",
-                "srcvtx": 389764
+                "file": "./mesh_1000um/leadfields/grfnc_ref_1237509_src_1257150.bdat",
+                "srcvtx": 1257150
             },
             "V6": {
-                "file": "./mesh_1000um/leadfields/grfnc_ref_347195_src_391191.bdat",
-                "srcvtx": 391191
+                "file": "./mesh_1000um/leadfields/grfnc_ref_1237509_src_1213916.bdat",
+                "srcvtx": 1213916
             }
         },
         "potential_order": [
@@ -336,7 +336,7 @@
                 "plot": true
             }
         },
-        "refvtx": 347195
+        "refvtx": 1237509
     },
   "simulation": {
     "autoupdate": 0,

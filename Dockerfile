@@ -17,10 +17,10 @@ RUN git clone -b main https://github.com/medunigraz/PIE-Model-Experiments.git
 ENV PATH="/openCARP/PIE-Model-Experiments/bin:$PATH"
 #ENV PATH="/openCARP/PIE-Model-Experiments/software/ParaView/bin:$PATH"
 
-RUN apt-get update \
-    && apt-get install -y \
-        nmap \
-        vim
+#RUN apt-get update \
+#    && apt-get install -y \
+#        nmap \
+#        vim
 
 
 

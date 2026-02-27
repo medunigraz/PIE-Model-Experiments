@@ -18,11 +18,15 @@ def main(args):
   sim_model = args["model"]
   input_dir = args["idir"]
   output_dir = args["odir"]
+  mod = 1.0
 
   if sim_model == "rd":
     vm_path = "{}/rd_250um/sim/vm.igb".format(input_dir)
+    #msh_path = 
+    mod = 0.25
   elif sim_model == "pie":
     vm_path = "{}/pie_1000um/vm_mv.igb".format(input_dir)
+    #msh_path = 
   else:
     print("Invalid simulation model type specified!")
     return
@@ -41,33 +45,34 @@ def main(args):
   t_end = 5000
   t_step = 2
   dt = t_step*1e-3
+  t_range = np.arange(t_start, t_end, t_step, dtype=int)
 
   fig, ax = plt.subplots()
-  trajectory = np.zeros((t_end-t_start, 2))
-  vm_slices = np.zeros((t_end-t_start, Mpts, Mpts))
+  trajectory = np.zeros((len(t_range), 2))
+  vm_slices = np.zeros((len(t_range), Mpts, Mpts))
   contour_vm_list = []
   contour_gvm_list = []
   max_vmc = -1
   max_vmgc = -1
 
-  for t in range(t_start, t_end, t_step):
+  for it, t in enumerate(t_range):
     vm_slice = vm_dat[t,:Npts].reshape((Mpts, Mpts))
     vm_slice = gaussian_filter(vm_slice, sigma=1)
-    t_slice = int((t-t_start)/t_step)
-    vm_slices[t_slice] = vm_slice
+    #t_slice = int((t-t_start)/t_step)
+    vm_slices[it] = vm_slice
     
     measured_contours_vm = measure.find_contours(vm_slice, -75.0)
     contours_vm = [np.array(item) for item in measured_contours_vm if len(item) > min_len]
     contour_vm = np.vstack(contours_vm)
 
     if t > t_start:
-      grad_vm = (vm_slices[t_slice-1] - vm_slices[t_slice])/dt
+      grad_vm = (vm_slices[it-1] - vm_slices[it])/dt
       measured_contours_gvm = measure.find_contours(grad_vm, 0.0)
       contours_gvm = [np.array(item) for item in measured_contours_gvm if len(item) > min_len]
       contour_gvm = np.vstack(contours_gvm)
 
       cdists = distance.cdist(contour_vm, contour_gvm).min(axis=1)
-      sdists = np.linalg.norm(trajectory[t_slice-1] - contour_vm, axis=1)
+      sdists = np.linalg.norm(trajectory[it-1] - contour_vm, axis=1)
 
       if t > t_start + 3*t_step:
         tdists = 0.9*cdists+0.1*sdists
@@ -78,11 +83,11 @@ def main(args):
         tdists = cdists
 
       idx = np.argmin(tdists)
-      trajectory[t_slice] = contour_vm[idx]
+      trajectory[it] = contour_vm[idx]
       contour_gvm_list.append(contours_gvm)
     else:
       contour_gvm_list.append(contours_vm)
-      trajectory[t_slice] = [0.0, 0.0]
+      trajectory[it] = [0.0, 0.0]
     
     contour_vm_list.append(contours_vm)
 
@@ -103,6 +108,9 @@ def main(args):
   ax.set_xticks([])
   ax.set_yticks([])
   plt.gca().invert_yaxis()
+
+  # output trajectory as file
+  np.save("{}/trajectory_data_{}.npy".format(input_dir, sim_model), trajectory*mod, allow_pickle=False)
 
   def update(frame):
     contours_vm = contour_vm_list[frame]

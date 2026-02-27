@@ -14,14 +14,40 @@ import matplotlib.gridspec as gs
 np.set_printoptions(suppress=True)
 
 # _________________________________________________________________________________________________
+def which(program):
+  def is_exe(fpath):
+      return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
+
+  fpath, fname = os.path.split(program)
+
+  if fpath:
+    if is_exe(program):
+      return program
+  else:
+    for path in os.environ.get("PATH", "").split(os.pathsep):
+      exe_file = os.path.join(path, program)
+
+      if is_exe(exe_file):
+        return exe_file
+
+  return None
+
+# _________________________________________________________________________________________________
 def main(args):
-  setup_ID = "A4_scaling"
   runs = args["runs"]
   modes = args["mode"].split(",")
-  setup_dir = "setups/{}".format(setup_ID)
+  setup_dir = "setups/A2_functional"
   result_dir = args["outdir"]
   Nproc = args["np"]
   mesh_res_um = args["res"]
+
+  if which("openCARP") != None:
+    carp_exe = "openCARP"
+  elif which("openCARP.opt") != None:
+    carp_exe = "openCARP.opt"
+  else:
+    print("Error: openCARP not found!")
+    return
 
   depth_start = np.float32(args["dstart"])*1e-4
   depth_end   = np.float32(args["dend"])*1e-4
@@ -31,7 +57,7 @@ def main(args):
   init_time_data = np.zeros((len(mesh_width_cm), 8))
   solve_time_data = np.zeros((len(mesh_width_cm), 8))
   labels = ["RD", "PIE[-]", "PIE[A]", "PIE[C]", "PIE[AC]", "PIE[ACK]", "PIE[ACKD]"]
-  pln_filepath = "{}/A4_scaling.plan.json".format(setup_dir)
+  pln_filepath = "{}/A2c_scaling.plan.json".format(setup_dir)
 
   for it, width_cm in enumerate(mesh_width_cm):
     msh_dir = "{}/mesh_{:.3f}cm".format(setup_dir, width_cm)
@@ -62,13 +88,33 @@ def main(args):
         if not os.path.exists(rd_outdir):
           os.makedirs(rd_outdir)
 
-        subprocess.run("pie-solver --pln2par --msh={} --pln={} --out={}".format(msh_filepath, pln_filepath, rd_outdir).split(' '))
+        ret = subprocess.run("./bin/pie-solver --pln2par --msh={} --pln={} --out={}".format(msh_filepath, pln_filepath, rd_outdir).split(' '))
+        
+        if ret.returncode != 0:
+          print("Error: pln2par failed!")
+          return
+        
         t1 = time.time()
-        subprocess.run("mpirun -np {:d} openCARP +F {}/lat.par".format(Nproc, rd_outdir).split(' '))
+        ret = subprocess.run("mpirun -np {:d} {} +F {}/lat.par".format(Nproc, carp_exe, rd_outdir).split(' '))
+        
+        if ret.returncode != 0:
+          print("Error: LAT simulation failed!")
+          return
+        
         t2 = time.time()
-        subprocess.run("mpirun -np {:d} openCARP +F {}/prp.par".format(Nproc, rd_outdir).split(' '))
+        ret = subprocess.run("mpirun -np {:d} {} +F {}/prp.par".format(Nproc, carp_exe, rd_outdir).split(' '))
+        
+        if ret.returncode != 0:
+          print("Error: PRP simulation failed!")
+          return
+        
         t3 = time.time()
-        subprocess.run("mpirun -np {:d} openCARP +F {}/sim.par".format(Nproc, rd_outdir).split(' '))
+        ret = subprocess.run("mpirun -np {:d} {} +F {}/sim.par".format(Nproc, carp_exe, rd_outdir).split(' '))
+
+        if ret.returncode != 0:
+          print("Error: SIM simulation failed!")
+          return
+        
         t4 = time.time()
 
         np.savetxt("{}/exec_times.txt".format(rd_outdir), np.array([t2 - t1, t3 - t2, t4 - t3, t4 - t1], dtype=np.float32))
@@ -111,7 +157,7 @@ def main(args):
 
   # plot
   if args["plot"] == True:
-    outfile_id = "{}/{}".format(result_dir, setup_ID)
+    outfile_id = "{}/A2c_scaling".format(result_dir)
     np.savetxt("{}_init_times.txt".format(outfile_id), init_time_data)
     np.savetxt("{}_solve_times.txt".format(outfile_id), solve_time_data)
 

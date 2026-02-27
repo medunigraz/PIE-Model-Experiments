@@ -24,6 +24,7 @@
 *.nod
 *.vtk
 *.pts_t
+*.bdat
 
 # Simulation files
 *.igb

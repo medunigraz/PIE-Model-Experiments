@@ -1,0 +1,34 @@
+-85.1081            # Vm
+-                   # Lambda
+-                   # delLambda
+-                   # Tension
+-                   # Ke
+-                   # Nae
+-                   # Cae
+0.00136266          # Iion
+-                   # tension_component
+-                   # illum
+tenTusscherPanfilov
+4.04016             # CaSR
+0.00032741          # CaSS
+0.125285            # Cai
+3.42765e-05         # D
+0.831023            # F
+0.986699            # F2
+0.998362            # FCaSS
+3.98e-05            # GCaL
+0.153               # GKr
+0.392               # GKs
+0.294               # Gto
+0.741224            # H
+0.715647            # J
+135.815             # Ki
+0.00176036          # M
+9.12454             # Nai
+2.46838e-08         # R
+0.938004            # R_
+0.999988            # S
+0.00292757          # Xr1
+0.469902            # Xr2
+0.00694301          # Xs
+
