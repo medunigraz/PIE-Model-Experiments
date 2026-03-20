@@ -36,7 +36,7 @@ def which(program):
 def main(args):
   runs = args["runs"]
   modes = args["mode"].split(",")
-  setup_dir = "setups/A2_functional"
+  setup_dir = "setups/E_functional"
   result_dir = args["outdir"]
   Nproc = args["np"]
   mesh_res_um = args["res"]
@@ -57,7 +57,7 @@ def main(args):
   init_time_data = np.zeros((len(mesh_width_cm), 8))
   solve_time_data = np.zeros((len(mesh_width_cm), 8))
   labels = ["RD", "PIE[-]", "PIE[A]", "PIE[C]", "PIE[AC]", "PIE[ACK]", "PIE[ACKD]"]
-  pln_filepath = "{}/A2c_scaling.plan.json".format(setup_dir)
+  pln_filepath = "{}/Ec_scaling.plan.json".format(setup_dir)
 
   for it, width_cm in enumerate(mesh_width_cm):
     msh_dir = "{}/mesh_{:.3f}cm".format(setup_dir, width_cm)
@@ -157,7 +157,7 @@ def main(args):
 
   # plot
   if args["plot"] == True:
-    outfile_id = "{}/A2c_scaling".format(result_dir)
+    outfile_id = "{}/Ec_scaling".format(result_dir)
     np.savetxt("{}_init_times.txt".format(outfile_id), init_time_data)
     np.savetxt("{}_solve_times.txt".format(outfile_id), solve_time_data)
 

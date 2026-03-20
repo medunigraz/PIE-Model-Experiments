@@ -42,19 +42,19 @@
 calibration/forcepss/tune
 results/sim
 results/ens
-setups/A3_wholeheart/mesh_250um/
-setups/A3_wholeheart/mesh_1000um/
-setups/A3_wholeheart/mesh_250um/leadfields
-setups/A3_wholeheart/mesh_1000um/leadfields
+setups/F_wholeheart/mesh_250um/
+setups/F_wholeheart/mesh_1000um/
+setups/F_wholeheart/mesh_250um/leadfields
+setups/F_wholeheart/mesh_1000um/leadfields
 
 # Except
 !.gitignore
 !calibration/
 !scripts/
 !setups/
-!setups/A1_anatomical/mesh_1000um/mesh_1000um.belem
-!setups/A1_anatomical/mesh_1000um/mesh_1000um.bpts
-!setups/A1_anatomical/mesh_1000um/mesh_1000um.blon
+!setups/D_anatomical/mesh_1000um/mesh_1000um.belem
+!setups/D_anatomical/mesh_1000um/mesh_1000um.bpts
+!setups/D_anatomical/mesh_1000um/mesh_1000um.blon
 !results/
 !eval.sh
 !clean.sh

@@ -13,7 +13,7 @@ from carputils.carpio import igb
 from matplotlib.ticker import ScalarFormatter
 
 # pie-solver --compare --mshA=msh_rd --latA=lat_rd --lrtA=lrt_rd --mshB=msh_pie --latB=lat_pie --lrtB=lrt_rd --out=cmpdir --nodal --np=32
-# Example: python3 scripts/frequency_maps.py --simdir=./results/sim/A2_functional
+# Example: python3 scripts/frequency_maps.py --simdir=./results/sim/E_functional
 
 # _________________________________________________________________________________________________
 def read_igb_file(igb_filepath):
@@ -27,7 +27,6 @@ def compute_pdf(data, xmin, xmax, N=100):
 
 # _________________________________________________________________________________________________
 def main(args):
-  #cases = ["A1_structural", "A2_functional", "A3_wholeheart"]
   simdir = args["simdir"]
 
   # Extend ScalarFormatter
@@ -124,7 +123,7 @@ def main(args):
 
   #print(np.amin(dfmap_rd), np.amax(dfmap_rd), np.amin(dfmap_pie), np.amax(dfmap_pie)) # -> 2.5 - 7.5
 
-  pdf_filepath = "{}/A2_dominant_frequencies.pdf".format(args["outdir"])
+  pdf_filepath = "{}/E_dominant_frequencies.pdf".format(args["outdir"])
   plt.tight_layout()
   plt.savefig(pdf_filepath, dpi=200, bbox_inches='tight')
   plt.show()

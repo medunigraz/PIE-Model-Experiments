@@ -33,12 +33,12 @@ def main(args):
   all_data = [lat_data[::-1], vel_data[::-1], lrt_data[::-1]]
 
   # visualization properties
-  axis_cfg = {"B1_restitution": [[-4.0, 4.0], [-0.02, 0.02], [ -4.0,  4.0]],
-              "B2_curvature":   [[-4.0, 4.0], [-0.3,  0.3 ], [ -8.0,  8.0]],
-              "B3_diffusion":   [[-8.0, 8.0], [-0.3,  0.3 ], [-32.0, 32.0]]}
+  axis_cfg = {"A_restitution": [[-4.0, 4.0], [-0.02, 0.02], [ -4.0,  4.0]],
+              "B_curvature":   [[-4.0, 4.0], [-0.3,  0.3 ], [ -8.0,  8.0]],
+              "C_diffusion":   [[-8.0, 8.0], [-0.3,  0.3 ], [-32.0, 32.0]]}
 
   n_points = 100
-  data_ranges = axis_cfg["B1_restitution"]
+  data_ranges = axis_cfg["A_restitution"]
   data_label  = ["LAT", "CV", "LRT"]
   units       = ["ms", "m/s", "ms"]
 
@@ -50,7 +50,7 @@ def main(args):
   rows, cols = (1, 3)
   #plt.rc('text', usetex=True)
   #plt.rc('font', family='Times New Roman', size=14)
-  fig = plt.figure(figsize=(12, 2))
+  fig = plt.figure(figsize=(12, 4))
   grd = gs.GridSpec(rows, cols)
   latex_str = sim_id
   

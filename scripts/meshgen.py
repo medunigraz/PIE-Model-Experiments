@@ -122,7 +122,25 @@ def main(args):
     if not os.path.exists(msh_dir):
       os.makedirs(msh_dir)
 
-    if mesh_id == "A1_anatomical":
+    if mesh_id == "A_restitution":
+      dims_cm = [25, 1, res_cm]
+      msh = mesher_gen(dims_cm, resolution_um, 90, msh_filepath)
+      msh.add_block([0, 0, 0], dims_cm, 1, False)
+      msh.generate()
+    elif mesh_id == "B_curvature":
+      dims_cm = [4, 2, res_cm]
+      msh = mesher_gen(dims_cm, resolution_um, 0, msh_filepath)
+      msh.add_block([0,   0, 0], dims_cm, 1, False)
+      msh.add_block([1,   0, 0], [3, 0.9, res_cm], 2, True)
+      msh.add_block([1, 1.1, 0], [3,   2, res_cm], 2, True)
+      msh.generate()
+    elif mesh_id == "C_diffusion":
+      dims_cm = [2, 6, res_cm]
+      msh = mesher_gen(dims_cm, resolution_um, 90, msh_filepath)
+      msh.add_block([0, 0, 0], [1, 6, res_cm], 1, False)
+      msh.add_block([1, 0, 0], [2, 6, res_cm], 2, False)
+      msh.generate()
+    elif mesh_id == "D_anatomical":
       if resolution_um == 1000:
         print("Provided by repository.")
       else:
@@ -141,31 +159,13 @@ def main(args):
         msh.generate()
         mt_cmd = "meshtool extract mesh -msh={} -tags=1,2,4 -submsh={} -ifmt=carp_bin -ofmt=carp_bin".format(msh_filepath, msh_filepath)
         subprocess.run(mt_cmd.split(' '))
-    elif mesh_id == "A2_functional":
+    elif mesh_id == "E_functional":
       dims_cm = [8, 8, res_cm]
       msh = mesher_gen(dims_cm, resolution_um, 0, msh_filepath)
       msh.add_block([0, 0, 0], dims_cm, 1, False)
       msh.generate()
-    elif mesh_id == "A3_wholeheart":
-      print("Please download A3_wholeheart from Zenodo.")
-    elif mesh_id == "B1_restitution":
-      dims_cm = [25, 1, res_cm]
-      msh = mesher_gen(dims_cm, resolution_um, 90, msh_filepath)
-      msh.add_block([0, 0, 0], dims_cm, 1, False)
-      msh.generate()
-    elif mesh_id == "B2_curvature":
-      dims_cm = [4, 2, res_cm]
-      msh = mesher_gen(dims_cm, resolution_um, 0, msh_filepath)
-      msh.add_block([0,   0, 0], dims_cm, 1, False)
-      msh.add_block([1,   0, 0], [3, 0.9, res_cm], 2, True)
-      msh.add_block([1, 1.1, 0], [3,   2, res_cm], 2, True)
-      msh.generate()
-    elif mesh_id == "B3_diffusion":
-      dims_cm = [2, 6, res_cm]
-      msh = mesher_gen(dims_cm, resolution_um, 90, msh_filepath)
-      msh.add_block([0, 0, 0], [1, 6, res_cm], 1, False)
-      msh.add_block([1, 0, 0], [2, 6, res_cm], 2, False)
-      msh.generate()
+    elif mesh_id == "F_wholeheart":
+      print("Please download F_wholeheart from Zenodo.")
     else:
       print("meshgen.py: invalid mesh ID! aborting ...")
       raise

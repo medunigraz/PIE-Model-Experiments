@@ -47,7 +47,7 @@ def main(args):
   ax[1].plot(trace_t, lin_rmse, ls='-', color='red')
   ax[1].set(xlabel='Time [ms]', ylabel='$L^2$ Distance [mm]', title="Phase Singularity Error over time")
 
-  pdf_filepath = "{}/A2_singularity_error.pdf".format(args["outdir"])
+  pdf_filepath = "{}/E_singularity_error.pdf".format(args["outdir"])
   plt.tight_layout()
   plt.savefig(pdf_filepath, dpi=200, bbox_inches='tight')
   plt.show()

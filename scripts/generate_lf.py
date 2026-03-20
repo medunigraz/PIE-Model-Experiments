@@ -8,7 +8,7 @@ import argparse
 import subprocess
 import numpy as np
 
-# Example: python3 ./scripts/generate_sigma.py --mshdir=setups/A3_wholeheart/mesh_3000um/ --pln=setups/A3_wholeheart/A3_wholeheart-3k.plan.json --gmodel=Clerc76 --np=16
+# Example: python3 ./scripts/generate_sigma.py --mshdir=setups/F_wholeheart/mesh_3000um/ --pln=setups/F_wholeheart/F_wholeheart-3k.plan.json --gmodel=Clerc76 --np=16
 
 # _________________________________________________________________________________________________
 class g_set:

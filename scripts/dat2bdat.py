@@ -26,7 +26,7 @@ def main(args):
       data.astype('float64').tofile("{}/{}.bdat".format(odir, file[:-4]))
 
 if __name__ == '__main__':
-  parser = argparse.ArgumentParser(description='Evaluation of the Pharma Study.')
+  parser = argparse.ArgumentParser(description='Converts txt LF data to bin LF data.')
   parser.add_argument('--idir', help='Input LF directory.',  type=str)
   parser.add_argument('--odir', help='Output LF directory.', type=str)
   args = vars(parser.parse_args())

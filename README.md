@@ -3,16 +3,16 @@ This repository provides a guide and the necessary resources for reproducing the
 
 ## Description
 The `setups` directory contains the six experimental setups from the study:
-* `A1_anatomical`: an anatomically induced reentry is simulated by pacing below an isthmus-shaped scar using a S1-S2 protocol.
-* `A2_functional`: a functional reentry is induced by stimulating a patch of tissue that overlaps with the waveback of a preceding planar wave front.
-* `A3_wholeheart`: a ventricular tachycardia is simulated in an anatomically detailed human whole heart model that incorporates a structurally accurate infarct scar.
-* `B1_restitution`: the left-hand face of a strip of healthy tissue is paced with a dynamic pacing protocol to investigate APD and CV restitution properties.
-* `B2_curvature`: concave and convex wave fronts are induced in healthy tissue to investigate curvature properties.
-* `B3_diffusion`: an interface between healthy and borderzone tissue types is paced at the bottom face to investigate diffusion properties.
+* `A_restitution`: the left-hand face of a strip of healthy tissue is paced with a dynamic pacing protocol to investigate APD and CV restitution properties.
+* `B_curvature`: concave and convex wave fronts are induced in healthy tissue to investigate curvature properties.
+* `C_diffusion`: an interface between healthy and borderzone tissue types is paced at the bottom face to investigate diffusion properties.
+* `D_anatomical`: an anatomically induced reentry is simulated by pacing below an isthmus-shaped scar using a S1-S2 protocol.
+* `E_functional`: a functional reentry is induced by stimulating a patch of tissue that overlaps with the waveback of a preceding planar wave front.
+* `F_wholeheart`: a ventricular tachycardia is simulated in an anatomically detailed human whole heart model that incorporates a structurally accurate infarct scar.
 
 Each setup consists of mesh files and one or multiple simulation plans in `.json` format. Meshes are stored in binary CARP (`.bpts`, `.belem`, `.blon`) and Visual Toolkit (`.vtk`) formats which can be visualized in either [NumeriCor Studio](https://numericor.at/rlb/wordpress/products/#ProdStudio) or [ParaView](https://www.paraview.org/). The human whole-heart experiment was carried over from [1] and additionally contains the lead-field data required for ECG reconstruction. 
 
-Note: The meshes for each setup, except the `A3_wholeheart`, are generated at runtime if not present. The complete dataset including the calibration data, the generated meshes, the anonymized human whole-heart model with lead-field data and rendered videos of each experiment are available via [Zenodo](https://doi.org/10.5281/zenodo.17198150) after the embargo is lifted.
+Note: The meshes for each setup, except the `F_wholeheart`, are generated at runtime if not present. The complete dataset including the calibration data, the generated meshes, the anonymized human whole-heart model with lead-field data and rendered videos of each experiment are available via [Zenodo](https://doi.org/10.5281/zenodo.17198150) after the embargo is lifted.
 
 The `calibration` directory contains files with captured physiological properties that were aquired through ForCEPSS [2] and are referenced by each simulation plan. These consist of ionic model state vectors, action potential (AP) shapes, action pontential duration (APD) and conduction velocity (CV) restitution curves.
 
@@ -31,7 +31,7 @@ The `scripts` directory contains a collection of python scripts to generate, pro
 * `ecg_comparison.py`: visualization of computed ECGs (legacy version).
 * `ecg_comparison_v2.py`: visualization of computed ECGs (current version).
 * `ecg_quantitative.py`: computes quantitative ECG metrics, including PCC, DTW and R-R intervals.
-* `performance_scaling.py`: conducts the performance scaling experiment using the `A2_functional` benchmark.
+* `performance_scaling.py`: conducts the performance scaling experiment using the `E_functional` benchmark.
 * `performance_eval.py`: conducts an performance evaluation of PIE simulations.
 
 The `results` directory contains the computed experimental data, including simulation data `sim`, paraview ensight visualizations `ens`, rendered images `png` and computed ECGs `ecg`.

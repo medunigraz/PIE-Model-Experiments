@@ -11,7 +11,8 @@ GIZMO_EXE=./bin/gizmo
 NP=32
 N_RUNS=5
 
-declare -a TESTCASES=("B1_restitution" "B2_curvature" "B3_diffusion" "A1_anatomical" "A2_functional" "A3_wholeheart")
+#declare -a TESTCASES=("A_restitution" "B_curvature" "C_diffusion" "D_anatomical" "E_functional" "F_wholeheart")
+declare -a TESTCASES=("C_diffusion")
 declare -a RES_RD_UM=("250")
 declare -a RES_PIE_UM=("1000")
 
@@ -119,7 +120,7 @@ esac
 done
 
 # Calibration =====================================================================================
-if true; then 
+if false; then 
   $PIE_EXE --tune --pln=./calibration/forcepss/template.plan.json --out=./calibration/forcepss/tune --np=$NP
   $P3_EXE ./scripts/visualize_calibration.py --pln=./calibration/forcepss/tune/calibrated-functions.plan.json --odir=./calibration/
 fi
@@ -140,7 +141,7 @@ for TESTCASE in "${TESTCASES[@]}"; do
   create_dir $PNG_DIR
 
   # Launch RD Simulations -------------------------------------------------------------------------
-  if true; then
+  if false; then
     for RES_UM in "${RES_RD_UM[@]}"; do
       MSH_DIR="${SETUP_DIR}/mesh_${RES_UM}um"
       MSH_ID=$(basename -- $MSH_DIR)
@@ -156,8 +157,8 @@ for TESTCASE in "${TESTCASES[@]}"; do
       if [ ! -d $SIM_RD ]; then
         create_dir $SIM_RD
 
-        if [ "$TESTCASE" = "A3_wholeheart" ]; then
-          $PIE_EXE --pln2par --msh=$MSH_PATH --pln="./setups/A3_wholeheart/A3_wholeheart-rd.plan.json" --out=$SIM_RD
+        if [ "$TESTCASE" = "F_wholeheart" ]; then
+          $PIE_EXE --pln2par --msh=$MSH_PATH --pln="./setups/F_wholeheart/F_wholeheart-rd.plan.json" --out=$SIM_RD
         else
           $PIE_EXE --pln2par --msh=$MSH_PATH --pln=$PLN_PATH --out=$SIM_RD
         fi
@@ -178,7 +179,7 @@ for TESTCASE in "${TESTCASES[@]}"; do
   fi
 
   # Launch PIE Model Simulations ------------------------------------------------------------------
-  if true; then 
+  if false; then 
     for RES_UM in "${RES_PIE_UM[@]}"; do
       MSH_DIR="${SETUP_DIR}/mesh_${RES_UM}um"
       MSH_ID=$(basename -- $MSH_DIR)
@@ -209,39 +210,39 @@ for TESTCASE in "${TESTCASES[@]}"; do
 
       # LAT and LRT maps are always generated
 
-      if [ "$TESTCASE" = "A1_anatomical" ]; then
-        run_pie $TESTCASE $RES_UM $MSH_PATH $PLN_PATH $SIM_DIR $ENS_DIR "--verb --np=$NP --dat=32"
-      elif [ "$TESTCASE" = "A2_functional" ]; then
-        run_pie $TESTCASE $RES_UM $MSH_PATH $PLN_PATH $SIM_DIR $ENS_DIR "--verb --np=$NP --dat=32"
-      elif [ "$TESTCASE" = "A3_wholeheart" ]; then
-        run_pie $TESTCASE $RES_UM $MSH_PATH $PLN_PATH $SIM_DIR $ENS_DIR "--verb --np=$NP --dat=32"
-      elif [ "$TESTCASE" = "B1_restitution" ]; then
+      if [ "$TESTCASE" = "A_restitution" ]; then
         run_pie $TESTCASE $RES_UM $MSH_PATH $PLN_PATH $SIM_DIR $ENS_DIR "--verb --np=$NP --no-cvr --no-apdr --no-curv --no-dif --dat=32" "00"
         run_pie $TESTCASE $RES_UM $MSH_PATH $PLN_PATH $SIM_DIR $ENS_DIR "--verb --np=$NP --no-cvr --no-curv --no-dif --dat=32" "01"
         run_pie $TESTCASE $RES_UM $MSH_PATH $PLN_PATH $SIM_DIR $ENS_DIR "--verb --np=$NP --no-apdr --no-curv --no-dif --dat=32" "10"
         run_pie $TESTCASE $RES_UM $MSH_PATH $PLN_PATH $SIM_DIR $ENS_DIR "--verb --np=$NP --no-curv --no-dif --dat=32 --prep" "11"
-      elif [ "$TESTCASE" = "B2_curvature" ]; then
+      elif [ "$TESTCASE" = "B_curvature" ]; then
         run_pie $TESTCASE $RES_UM $MSH_PATH $PLN_PATH $SIM_DIR $ENS_DIR "--verb --np=$NP --no-dif --dat=32"
-      elif [ "$TESTCASE" = "B3_diffusion" ]; then
+      elif [ "$TESTCASE" = "C_diffusion" ]; then
         run_pie $TESTCASE $RES_UM $MSH_PATH $PLN_PATH $SIM_DIR $ENS_DIR "--verb --np=$NP --no-curv --dat=32"
+      elif [ "$TESTCASE" = "D_anatomical" ]; then
+        run_pie $TESTCASE $RES_UM $MSH_PATH $PLN_PATH $SIM_DIR $ENS_DIR "--verb --np=$NP --dat=32"
+      elif [ "$TESTCASE" = "E_functional" ]; then
+        run_pie $TESTCASE $RES_UM $MSH_PATH $PLN_PATH $SIM_DIR $ENS_DIR "--verb --np=$NP --dat=32"
+      elif [ "$TESTCASE" = "F_wholeheart" ]; then
+        run_pie $TESTCASE $RES_UM $MSH_PATH $PLN_PATH $SIM_DIR $ENS_DIR "--verb --np=$NP --dat=32"
       else
         echo "Error: invalid testcase specified, must be one of the following:"
-        echo "(A1_anatomical, A2_functional, A3_wholeheart, B1_restitution, B2_curvature, B3_diffusion)"
+        echo "(A_restitution, B_curvature, C_diffusion, D_anatomical, E_functional, F_wholeheart)"
       fi
     done
   fi
 
   # Compare RD and PIE Results --------------------------------------------------------------------
-  if true; then
+  if false; then
     for RES_RD in "${RES_RD_UM[@]}"; do
       for RES_PIE in "${RES_PIE_UM[@]}"; do
-        if   [ "$TESTCASE" = "B1_restitution" ]; then
+        if   [ "$TESTCASE" = "A_restitution" ]; then
           compare_rd_pie $RES_RD $RES_PIE $SETUP_DIR $SIM_DIR $ENS_DIR "11"
-        elif [ "$TESTCASE" = "B2_curvature" ] || [ "$TESTCASE" = "B3_diffusion" ]; then
+        elif [ "$TESTCASE" = "B_curvature" ] || [ "$TESTCASE" = "C_diffusion" ]; then
           compare_rd_pie $RES_RD $RES_PIE $SETUP_DIR $SIM_DIR $ENS_DIR
-        elif [ "$TESTCASE" = "A2_functional" ]; then
-          $P3_EXE ./scripts/track_phase_singularity.py --idir=$SIM_DIR --model=rd  --odir=./results/png/A2_functional
-          $P3_EXE ./scripts/track_phase_singularity.py --idir=$SIM_DIR --model=pie --odir=./results/png/A2_functional
+        elif [ "$TESTCASE" = "E_functional" ]; then
+          $P3_EXE ./scripts/track_phase_singularity.py --idir=$SIM_DIR --model=rd  --odir=./results/png/E_functional
+          $P3_EXE ./scripts/track_phase_singularity.py --idir=$SIM_DIR --model=pie --odir=./results/png/E_functional
           $P3_EXE ./scripts/phase_singularity_error.py --simdir=$SIM_DIR --outdir=$SIM_DIR
           #compare_rd_pie $RES_RD $RES_PIE $SETUP_DIR $SIM_DIR $ENS_DIR
           $P3_EXE ./scripts/frequency_maps.py --simdir=$SIM_DIR --outdir=$SIM_DIR
@@ -250,10 +251,10 @@ for TESTCASE in "${TESTCASES[@]}"; do
           #create_dir $PHASE_DIR
           #$MT_EXE collect -imsh="${SETUP_DIR}/mesh_250um/mesh_250um" -omsh="${PHASE_DIR}/phasemap_rd" -nod="${SIM_DIR}/rd_250um/sim/phasemap.igb" -ifmt=carp_bin -ofmt=ens_bin
           #$MT_EXE collect -imsh="${SETUP_DIR}/mesh_1000um/mesh_1000um" -omsh="${PHASE_DIR}/phasemap_pie" -nod="${SIM_DIR}/pie_1000um/phasemap.igb" -ifmt=carp_bin -ofmt=ens_bin
-        elif [ "$TESTCASE" = "A3_wholeheart" ]; then
+        elif [ "$TESTCASE" = "F_wholeheart" ]; then
           #$P3_EXE ./scripts/ecg_comparison.py ./results/ecg/ecg_rd_250um.json ./results/ecg/ecg_pie_1000um.json
           $P3_EXE ./scripts/ecg_comparison_v2.py ./results/ecg/ecg_rd_250um.json ./results/ecg/ecg_pie_1000um.json
-          $P3_EXE ./scripts/ecg_quantitative.py --ecgA=./results/ecg/ecg_rd_250um.json --ecgB=./results/ecg/ecg_pie_1000um.json --out=./results/A3_wholeheart
+          $P3_EXE ./scripts/ecg_quantitative.py --ecgA=./results/ecg/ecg_rd_250um.json --ecgB=./results/ecg/ecg_pie_1000um.json --out=./results/F_wholeheart
         fi
       done
     done
@@ -264,42 +265,42 @@ done
 if true; then
   $P3_EXE ./scripts/plot_outliers.py --outdir=./results
 
-  PERF_DIR="./results/sim/A2c_scaling"
-  create_dir $PERF_DIR
+  #PERF_DIR="./results/sim/Ec_scaling"
+  #create_dir $PERF_DIR
 
-  $P3_EXE ./scripts/performance_scaling.py --mode RD,PIE --res 250 --dstart 250 --dend 7000 --dstep 250 --np $NP --plot --outdir $PERF_DIR
+  #$P3_EXE ./scripts/performance_scaling.py --mode RD,PIE --res 250 --dstart 250 --dend 7000 --dstep 250 --np $NP --plot --outdir $PERF_DIR
 fi
 
 # Supplementary Experiments =======================================================================
 
-# A2_variability - Rotor Sensitivity
-if true; then
-  $PIE_EXE --msh="./setups/A2_functional/mesh_1000um/mesh_1000um" --pln="./setups/A2_functional/A2a_functional.plan.json" --out="./results/sim/A2a_functional/pie_1000um/" --verb --np=$NP --dat=32
-  $PIE_EXE --msh="./setups/A2_functional/mesh_1000um/mesh_1000um" --pln="./setups/A2_functional/A2b_functional.plan.json" --out="./results/sim/A2b_functional/pie_1000um/" --verb --np=$NP --dat=32
+# E_variability - Rotor Sensitivity
+if false; then
+  $PIE_EXE --msh="./setups/E_functional/mesh_1000um/mesh_1000um" --pln="./setups/E_functional/Ea_functional.plan.json" --out="./results/sim/Ea_functional/pie_1000um/" --verb --np=$NP --dat=32
+  $PIE_EXE --msh="./setups/E_functional/mesh_1000um/mesh_1000um" --pln="./setups/E_functional/Eb_functional.plan.json" --out="./results/sim/Eb_functional/pie_1000um/" --verb --np=$NP --dat=32
 
-  $MT_EXE collect -imsh="./setups/A2_functional/mesh_1000um/mesh_1000um" -omsh="./results/ens/A2a_functional/pie_1000um/pie_data" -nod="./results/sim/A2a_functional/pie_1000um/vm_mv.igb" -ifmt=carp_bin -ofmt=ens_bin
-  $MT_EXE collect -imsh="./setups/A2_functional/mesh_1000um/mesh_1000um" -omsh="./results/ens/A2b_functional/pie_1000um/pie_data" -nod="./results/sim/A2b_functional/pie_1000um/vm_mv.igb" -ifmt=carp_bin -ofmt=ens_bin
+  $MT_EXE collect -imsh="./setups/E_functional/mesh_1000um/mesh_1000um" -omsh="./results/ens/Ea_functional/pie_1000um/pie_data" -nod="./results/sim/Ea_functional/pie_1000um/vm_mv.igb" -ifmt=carp_bin -ofmt=ens_bin
+  $MT_EXE collect -imsh="./setups/E_functional/mesh_1000um/mesh_1000um" -omsh="./results/ens/Eb_functional/pie_1000um/pie_data" -nod="./results/sim/Eb_functional/pie_1000um/vm_mv.igb" -ifmt=carp_bin -ofmt=ens_bin
 fi
 
-# A3_wholeheart - Impact of Spatial Resampling
-if true; then
+# F_wholeheart - Impact of Spatial Resampling
+if false; then
   # non-preserved
-  $P3_EXE "./scripts/performance_eval.py" --msh="./setups/A3_wholeheart/meshes_non_preserved/mesh_1000um/mesh_1000um" --pln="./setups/A3_wholeheart/meshes_non_preserved/A3_wholeheart-1k.plan.json" --out="./results/sim/A3_wholeheart/A1" --np=$NP --runs=$N_RUNS
-  $P3_EXE "./scripts/performance_eval.py" --msh="./setups/A3_wholeheart/meshes_non_preserved/mesh_2000um/mesh_2000um" --pln="./setups/A3_wholeheart/meshes_non_preserved/A3_wholeheart-2k.plan.json" --out="./results/sim/A3_wholeheart/A2" --np=$NP --runs=$N_RUNS
-  $P3_EXE "./scripts/performance_eval.py" --msh="./setups/A3_wholeheart/meshes_non_preserved/mesh_3000um/mesh_3000um" --pln="./setups/A3_wholeheart/meshes_non_preserved/A3_wholeheart-3k.plan.json" --out="./results/sim/A3_wholeheart/A3" --np=$NP --runs=$N_RUNS
+  $P3_EXE "./scripts/performance_eval.py" --msh="./setups/F_wholeheart/meshes_non_preserved/mesh_1000um/mesh_1000um" --pln="./setups/F_wholeheart/meshes_non_preserved/F_wholeheart-1k.plan.json" --out="./results/sim/F_wholeheart/A1" --np=$NP --runs=$N_RUNS
+  $P3_EXE "./scripts/performance_eval.py" --msh="./setups/F_wholeheart/meshes_non_preserved/mesh_2000um/mesh_2000um" --pln="./setups/F_wholeheart/meshes_non_preserved/F_wholeheart-2k.plan.json" --out="./results/sim/F_wholeheart/A2" --np=$NP --runs=$N_RUNS
+  $P3_EXE "./scripts/performance_eval.py" --msh="./setups/F_wholeheart/meshes_non_preserved/mesh_3000um/mesh_3000um" --pln="./setups/F_wholeheart/meshes_non_preserved/F_wholeheart-3k.plan.json" --out="./results/sim/F_wholeheart/A3" --np=$NP --runs=$N_RUNS
 
-  $P3_EXE "./scripts/ecg_quantitative.py" --ecgA="./results/ecg/ecg_rd_250um.json" --ecgB="./results/sim/A3_wholeheart/A1/ecg.json" --out="./results/A3_wholeheart"
-  $P3_EXE "./scripts/ecg_quantitative.py" --ecgA="./results/ecg/ecg_rd_250um.json" --ecgB="./results/sim/A3_wholeheart/A2/ecg.json" --out="./results/A3_wholeheart"
-  $P3_EXE "./scripts/ecg_quantitative.py" --ecgA="./results/ecg/ecg_rd_250um.json" --ecgB="./results/sim/A3_wholeheart/A3/ecg.json" --out="./results/A3_wholeheart" # no sustained reentry!
+  $P3_EXE "./scripts/ecg_quantitative.py" --ecgA="./results/ecg/ecg_rd_250um.json" --ecgB="./results/sim/F_wholeheart/A1/ecg.json" --out="./results/F_wholeheart"
+  $P3_EXE "./scripts/ecg_quantitative.py" --ecgA="./results/ecg/ecg_rd_250um.json" --ecgB="./results/sim/F_wholeheart/A2/ecg.json" --out="./results/F_wholeheart"
+  $P3_EXE "./scripts/ecg_quantitative.py" --ecgA="./results/ecg/ecg_rd_250um.json" --ecgB="./results/sim/F_wholeheart/A3/ecg.json" --out="./results/F_wholeheart" # no sustained reentry!
 
   # surf-preserved
-  $P3_EXE "./scripts/performance_eval.py" --msh="./setups/A3_wholeheart/meshes_surf_preserved/mesh_1000um/mesh_1000um" --pln="./setups/A3_wholeheart/meshes_surf_preserved/A3_wholeheart-1k.plan.json" --out="./results/sim/A3_wholeheart/B1" --np=$NP --runs=$N_RUNS
-  $P3_EXE "./scripts/performance_eval.py" --msh="./setups/A3_wholeheart/meshes_surf_preserved/mesh_2000um/mesh_2000um" --pln="./setups/A3_wholeheart/meshes_surf_preserved/A3_wholeheart-2k.plan.json" --out="./results/sim/A3_wholeheart/B2" --np=$NP --runs=$N_RUNS
-  $P3_EXE "./scripts/performance_eval.py" --msh="./setups/A3_wholeheart/meshes_surf_preserved/mesh_3000um/mesh_3000um" --pln="./setups/A3_wholeheart/meshes_surf_preserved/A3_wholeheart-3k.plan.json" --out="./results/sim/A3_wholeheart/B3" --np=$NP --runs=$N_RUNS
+  $P3_EXE "./scripts/performance_eval.py" --msh="./setups/F_wholeheart/meshes_surf_preserved/mesh_1000um/mesh_1000um" --pln="./setups/F_wholeheart/meshes_surf_preserved/F_wholeheart-1k.plan.json" --out="./results/sim/F_wholeheart/B1" --np=$NP --runs=$N_RUNS
+  $P3_EXE "./scripts/performance_eval.py" --msh="./setups/F_wholeheart/meshes_surf_preserved/mesh_2000um/mesh_2000um" --pln="./setups/F_wholeheart/meshes_surf_preserved/F_wholeheart-2k.plan.json" --out="./results/sim/F_wholeheart/B2" --np=$NP --runs=$N_RUNS
+  $P3_EXE "./scripts/performance_eval.py" --msh="./setups/F_wholeheart/meshes_surf_preserved/mesh_3000um/mesh_3000um" --pln="./setups/F_wholeheart/meshes_surf_preserved/F_wholeheart-3k.plan.json" --out="./results/sim/F_wholeheart/B3" --np=$NP --runs=$N_RUNS
 
-  $P3_EXE "./scripts/ecg_quantitative.py" --ecgA="./results/ecg/ecg_rd_250um.json" --ecgB="./results/sim/A3_wholeheart/B1/ecg.json" --out="./results/A3_wholeheart"
-  $P3_EXE "./scripts/ecg_quantitative.py" --ecgA="./results/ecg/ecg_rd_250um.json" --ecgB="./results/sim/A3_wholeheart/B2/ecg.json" --out="./results/A3_wholeheart"
-  $P3_EXE "./scripts/ecg_quantitative.py" --ecgA="./results/ecg/ecg_rd_250um.json" --ecgB="./results/sim/A3_wholeheart/B3/ecg.json" --out="./results/A3_wholeheart"
+  $P3_EXE "./scripts/ecg_quantitative.py" --ecgA="./results/ecg/ecg_rd_250um.json" --ecgB="./results/sim/F_wholeheart/B1/ecg.json" --out="./results/F_wholeheart"
+  $P3_EXE "./scripts/ecg_quantitative.py" --ecgA="./results/ecg/ecg_rd_250um.json" --ecgB="./results/sim/F_wholeheart/B2/ecg.json" --out="./results/F_wholeheart"
+  $P3_EXE "./scripts/ecg_quantitative.py" --ecgA="./results/ecg/ecg_rd_250um.json" --ecgB="./results/sim/F_wholeheart/B3/ecg.json" --out="./results/F_wholeheart"
 
   # visualization
   $P3_EXE ./scripts/ecg_comparison_v2.py ./results/ecg/ecg_rd_250um.json ./results/ecg/ecg_pie_1000um.json ./results/ecg/ecg_pie_1000um_np.json ./results/ecg/ecg_pie_2000um_np.json ./results/ecg/ecg_pie_3000um_np.json ./results/ecg/ecg_pie_1000um_sp.json ./results/ecg/ecg_pie_2000um_sp.json ./results/ecg/ecg_pie_3000um_sp.json

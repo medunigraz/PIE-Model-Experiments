@@ -327,7 +327,7 @@ def main():
   fig.canvas.mpl_connect('pick_event', onpick)
   #pdf_filepath = "./results/ecg_comp_A.pdf"
   #pdf_filepath = "./results/ecg_comp_B.pdf"
-  pdf_filepath = "./results/A3_wholeheart_ECG.pdf"
+  pdf_filepath = "./results/F_wholeheart_ECG.pdf"
   mplplot.savefig(pdf_filepath, dpi=300, bbox_inches='tight')  
   mplplot.show()
 

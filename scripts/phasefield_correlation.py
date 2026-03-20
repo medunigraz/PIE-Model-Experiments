@@ -291,7 +291,7 @@ def main(args):
   #fig.colorbar(im1, orientation='vertical')
   #fig.colorbar(im2, orientation='vertical')
   #fig.colorbar(im3, orientation='vertical')
-  pdf_filepath = "{}/A2_phase_correlation_v2.pdf".format(args["outdir"])
+  pdf_filepath = "{}/E_phase_correlation_v2.pdf".format(args["outdir"])
   plt.tight_layout()
   plt.savefig(pdf_filepath, dpi=200, bbox_inches='tight')
   plt.show()
