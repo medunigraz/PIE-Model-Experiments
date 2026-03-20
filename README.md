@@ -21,7 +21,7 @@ The `scripts` directory contains a collection of python scripts to generate, pro
 * `visualize_calibration.py`: visualizes the calibration results.
 * `generate_lf.py`: generation of lead-field data using GIZMO.
 * `dat2bdat.py`: converts lead-field data from text to binary format.
-* `apply_tstart_offset.py`: corrects the timing offset of LAT files caused by prepacing in CARP.
+* `apply_tstart_offset.py`: corrects the timing offset of LAT files due to prepacing.
 * `error_density.py`: plots LAT, CV and LRT error density maps for a given setup.
 * `track_phase_singularity.py`: performs phase singularity tracking and visualization.
 * `phase_singularity_error.py`: computes quantiative phase singularity error metrics.
@@ -32,7 +32,7 @@ The `scripts` directory contains a collection of python scripts to generate, pro
 * `ecg_comparison_v2.py`: visualization of computed ECGs (current version).
 * `ecg_quantitative.py`: computes quantitative ECG metrics, including PCC, DTW and R-R intervals.
 * `performance_scaling.py`: conducts the performance scaling experiment using the `E_functional` benchmark.
-* `performance_eval.py`: conducts an performance evaluation of PIE simulations.
+* `performance_eval.py`: conducts a performance evaluation of PIE simulations.
 
 The `results` directory contains the computed experimental data, including simulation data `sim`, paraview ensight visualizations `ens`, rendered images `png` and computed ECGs `ecg`.
 
@@ -41,7 +41,7 @@ The `eval.sh` bash file automatically runs all operations for reproducing the ex
 The `clean.sh` bash file cleans generated data within this repository.
 
 ## Setup
-The evaluation relies on the [openCARP](https://opencarp.org/) simulation framework which also includes [mesher](https://git.opencarp.org/openCARP/openCARP/-/tree/master/tools/mesher) and [meshtool](https://bitbucket.org/aneic/meshtool/src/master/) required for mesh generation. Two options are presented to meet the dependencies required for reproducing the experimental results:
+The evaluation relies on the [openCARP](https://opencarp.org/) simulation framework which also includes [mesher](https://git.opencarp.org/openCARP/openCARP/-/tree/master/tools/mesher) and [meshtool](https://bitbucket.org/aneic/meshtool/src/master/) that are required for mesh generation. Two options are presented to meet the dependencies for reproducing the experimental results:
 
 ### Docker Setup
 All neccessary prequesites for reproducing the experimental data are available within the [openCARP Docker Image](https://opencarp.org/download/installation#installation-of-opencarp-). A Dockerfile is provided within this repository to build an image with all dependencies:
@@ -71,13 +71,13 @@ cd PIE-Model-Experiments
 Note: the experimental results were computed using the PIE-Solver executable version 1.0. The executable itself cannot be publicly disclosed because it relies on proprietary libraries. However, binary executables compiled for the major platforms (Linux, macOS or Windows) can be provided upon request by contacting the corresponding authors.
 
 ## Experimental Results
-Running the following command creates the `results` output directory reproduces the experimental results:
+Running the following command reproduces the experimental results:
 
 ```bash
 ./eval.sh -np=32
 ```
 
-where the option `-np=<int>` allows to specify the number of threads used for computation. Reproducing all results, except the whole-heart model reference, should take roughly 15 minutes on a desktop computer. 
+where the option `-np=<int>` allows to specify the number of threads used for computation. Reproducing all results, except the whole-heart model reference, should take roughly 20 minutes on a desktop computer. 
 
 https://github.com/user-attachments/assets/c4f291c4-4a62-4468-a736-08f7d34a5ccb
 

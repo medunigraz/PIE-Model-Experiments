@@ -12,7 +12,7 @@ NP=32
 N_RUNS=5
 
 #declare -a TESTCASES=("A_restitution" "B_curvature" "C_diffusion" "D_anatomical" "E_functional" "F_wholeheart")
-declare -a TESTCASES=("C_diffusion")
+declare -a TESTCASES=("A_diffusion")
 declare -a RES_RD_UM=("250")
 declare -a RES_PIE_UM=("1000")
 
@@ -265,10 +265,9 @@ done
 if true; then
   $P3_EXE ./scripts/plot_outliers.py --outdir=./results
 
-  #PERF_DIR="./results/sim/Ec_scaling"
-  #create_dir $PERF_DIR
-
-  #$P3_EXE ./scripts/performance_scaling.py --mode RD,PIE --res 250 --dstart 250 --dend 7000 --dstep 250 --np $NP --plot --outdir $PERF_DIR
+  PERF_DIR="./results/sim/Ec_scaling"
+  create_dir $PERF_DIR
+  $P3_EXE ./scripts/performance_scaling.py --mode RD,PIE --res 250 --dstart 250 --dend 7000 --dstep 250 --np $NP --plot --outdir $PERF_DIR
 fi
 
 # Supplementary Experiments =======================================================================
