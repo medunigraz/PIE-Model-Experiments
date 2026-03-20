@@ -68,6 +68,15 @@ git clone https://github.com/medunigraz/PIE-Model-Experiments.git
 cd PIE-Model-Experiments
 ```
 
+### Optional: Zenodo
+The mesh files of the human whole-heart model are exclusively available on the [Zenodo](https://doi.org/10.5281/zenodo.17198150) repository. After the embargo has been lifted, download the zipped `setups.zip` file into the PIE-Model-Experiments repository and run the following commands to add the whole-heart model files:
+
+```bash
+apt-get update
+apt-get install unzip
+unzip setups.zip
+```
+
 Note: the experimental results were computed using the PIE-Solver executable version 1.0. The executable itself cannot be publicly disclosed because it relies on proprietary libraries. However, binary executables compiled for the major platforms (Linux, macOS or Windows) can be provided upon request by contacting the corresponding authors.
 
 ## Experimental Results

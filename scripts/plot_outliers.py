@@ -26,8 +26,8 @@ def main(args):
   # plot visualization
   ax = []
   rows, cols = (3, 3)
-  plt.rc('text', usetex=True)
-  plt.rc('font', family='Times New Roman', size=14)
+  #plt.rc('text', usetex=True)
+  #plt.rc('font', family='Times New Roman', size=14)
   fig = plt.figure(figsize=(16, 12))
   grd = gs.GridSpec(rows, cols)
 

@@ -4,15 +4,15 @@
 PIE_EXE=./bin/pie-solver
 MT_EXE=meshtool
 P3_EXE=python3
-CARP_EXE=openCARP.opt
+CARP_EXE=openCARP
 GIZMO_EXE=./bin/gizmo
 
 # Default Variables ===============================================================================
 NP=32
 N_RUNS=5
 
-#declare -a TESTCASES=("A_restitution" "B_curvature" "C_diffusion" "D_anatomical" "E_functional" "F_wholeheart")
-declare -a TESTCASES=("A_diffusion")
+declare -a TESTCASES=("A_restitution" "B_curvature" "C_diffusion" "D_anatomical" "E_functional" "F_wholeheart")
+# declare -a TESTCASES=("A_restitution") # single test case example
 declare -a RES_RD_UM=("250")
 declare -a RES_PIE_UM=("1000")
 
@@ -109,6 +109,9 @@ function compare_rd_pie {
 for i in "$@"
 do
 case $i in
+  -test=*)
+  TESTCASES="${i#*=}"
+  ;;
   -np=*)
   NP="${i#*=}"
   ;;
@@ -120,7 +123,7 @@ esac
 done
 
 # Calibration =====================================================================================
-if false; then 
+if true; then 
   $PIE_EXE --tune --pln=./calibration/forcepss/template.plan.json --out=./calibration/forcepss/tune --np=$NP
   $P3_EXE ./scripts/visualize_calibration.py --pln=./calibration/forcepss/tune/calibrated-functions.plan.json --odir=./calibration/
 fi
@@ -141,7 +144,7 @@ for TESTCASE in "${TESTCASES[@]}"; do
   create_dir $PNG_DIR
 
   # Launch RD Simulations -------------------------------------------------------------------------
-  if false; then
+  if true; then
     for RES_UM in "${RES_RD_UM[@]}"; do
       MSH_DIR="${SETUP_DIR}/mesh_${RES_UM}um"
       MSH_ID=$(basename -- $MSH_DIR)
@@ -179,7 +182,7 @@ for TESTCASE in "${TESTCASES[@]}"; do
   fi
 
   # Launch PIE Model Simulations ------------------------------------------------------------------
-  if false; then 
+  if true; then 
     for RES_UM in "${RES_PIE_UM[@]}"; do
       MSH_DIR="${SETUP_DIR}/mesh_${RES_UM}um"
       MSH_ID=$(basename -- $MSH_DIR)
@@ -210,7 +213,7 @@ for TESTCASE in "${TESTCASES[@]}"; do
 
       # LAT and LRT maps are always generated
 
-      if [ "$TESTCASE" = "A_restitution" ]; then
+      if   [ "$TESTCASE" = "A_restitution" ]; then
         run_pie $TESTCASE $RES_UM $MSH_PATH $PLN_PATH $SIM_DIR $ENS_DIR "--verb --np=$NP --no-cvr --no-apdr --no-curv --no-dif --dat=32" "00"
         run_pie $TESTCASE $RES_UM $MSH_PATH $PLN_PATH $SIM_DIR $ENS_DIR "--verb --np=$NP --no-cvr --no-curv --no-dif --dat=32" "01"
         run_pie $TESTCASE $RES_UM $MSH_PATH $PLN_PATH $SIM_DIR $ENS_DIR "--verb --np=$NP --no-apdr --no-curv --no-dif --dat=32" "10"
@@ -233,7 +236,7 @@ for TESTCASE in "${TESTCASES[@]}"; do
   fi
 
   # Compare RD and PIE Results --------------------------------------------------------------------
-  if false; then
+  if true; then
     for RES_RD in "${RES_RD_UM[@]}"; do
       for RES_PIE in "${RES_PIE_UM[@]}"; do
         if   [ "$TESTCASE" = "A_restitution" ]; then
@@ -273,7 +276,7 @@ fi
 # Supplementary Experiments =======================================================================
 
 # E_variability - Rotor Sensitivity
-if false; then
+if true; then
   $PIE_EXE --msh="./setups/E_functional/mesh_1000um/mesh_1000um" --pln="./setups/E_functional/Ea_functional.plan.json" --out="./results/sim/Ea_functional/pie_1000um/" --verb --np=$NP --dat=32
   $PIE_EXE --msh="./setups/E_functional/mesh_1000um/mesh_1000um" --pln="./setups/E_functional/Eb_functional.plan.json" --out="./results/sim/Eb_functional/pie_1000um/" --verb --np=$NP --dat=32
 
@@ -282,7 +285,9 @@ if false; then
 fi
 
 # F_wholeheart - Impact of Spatial Resampling
-if false; then
+if true; then
+  create_dir "./results/sim/F_wholeheart"
+
   # non-preserved
   $P3_EXE "./scripts/performance_eval.py" --msh="./setups/F_wholeheart/meshes_non_preserved/mesh_1000um/mesh_1000um" --pln="./setups/F_wholeheart/meshes_non_preserved/F_wholeheart-1k.plan.json" --out="./results/sim/F_wholeheart/A1" --np=$NP --runs=$N_RUNS
   $P3_EXE "./scripts/performance_eval.py" --msh="./setups/F_wholeheart/meshes_non_preserved/mesh_2000um/mesh_2000um" --pln="./setups/F_wholeheart/meshes_non_preserved/F_wholeheart-2k.plan.json" --out="./results/sim/F_wholeheart/A2" --np=$NP --runs=$N_RUNS
