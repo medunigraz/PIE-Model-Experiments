@@ -94,11 +94,7 @@ https://github.com/user-attachments/assets/2208a2a6-dcc6-4b3e-ae64-08208a553125
 
 Computing the reference data for the human whole-heart experiment requires multiple hours, even with substantial computational resources. Our results were computed on the [Austrian Scientific Cluster](https://www.vsc.ac.at/home/). 
 
-Whole-Heart|RD|PIE
---|--|--
-<video src="https://github.com/user-attachments/assets/e85a4e22-a305-448b-983e-8ddf0989a511"></video> | <video src="https://github.com/user-attachments/assets/e907f6d1-2e0a-44ff-a14c-c9178dbbd4f9"></video> | <video src="https://github.com/user-attachments/assets/55ace140-d441-4259-9a6f-d2a60b9a4765"></video>
 
-https://github.com/user-attachments/assets/cc897e84-7b0b-4035-83ca-4ba1d977bad8
 
 Run the following command to clean the repository:
 

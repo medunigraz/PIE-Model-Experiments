@@ -9,6 +9,7 @@ import matplotlib.text as mpltext
 import matplotlib.lines as mpllines
 import matplotlib.pyplot as mplplot
 import matplotlib.gridspec as mplgridspec
+import matplotlib.animation as animation
 
 from scipy.stats import pearsonr
 from scipy.signal import find_peaks, correlate
@@ -179,9 +180,6 @@ def main():
 
   width = 20
   height = 7.5
-  #height = 10.0
-  #width = 2.0*height
-  # width = 1.618*height
   files = list()
 
   for arg in sys.argv[1:]:
@@ -216,8 +214,6 @@ def main():
     
     if file.endswith('.dat'):
       jdata = dat2dict(file)
-    
-    #jdata['ecg']['aVR'] = -1.0*np.array(jdata['ecg']['aVR'], dtype=float) # we stored maVR in aVR
 
     for lead in jdata['ecg'].keys():
       leads.add(lead)
@@ -225,19 +221,9 @@ def main():
     ecgs[file] = (jdata, scale, alpha)
 
   leads = tuple(["I", "II", "III", "maVR", "aVL", "aVF", "V1", "V2", "V3", "V4", "V5", "V6"])
-
-  # compute PCC and DTW
-  #ecg_rd, _, _  = ecgs["./results/ecg/ecg_rd_250um.json"]
-  #ecg_pie, _, _ = ecgs["./results/ecg/ecg_pie_1000um.json"]
-  #pcc_dtw_per_lead(ecg_rd, ecg_pie, leads, distance=200, window=100, title="DTW and PCC")
-  
   lcols = ['black', 'red', 'goldenrod', 'mediumvioletred', 'dodgerblue', 'goldenrod', 'mediumvioletred', 'dodgerblue']
-  #lcols = ['black', 'red', 'mediumblue', 'royalblue', 'deepskyblue', 'darkgreen', 'limegreen', 'lightgreen']
   lalph = 0.8*np.array([255.0, 255.0, 255.0, 255.0, 255.0, 255.0, 255.0, 255.0])/255.0
-
-  #lcols = ['black', 'red', 'royalblue', 'royalblue', 'royalblue', 'limegreen', 'limegreen', 'limegreen']
-  #lalph = np.array([255.0, 255.0, 200.0, 150.0, 100.0, 200.0, 150.0, 100.0])/255.0
-  vlins = np.array([125, 500, 1950, 3650, 4890, 5000])*1e-3
+  #vlins = np.array([125, 500, 1950, 3650, 4890, 5000])*1e-3
 
   # plot
   na = 3
@@ -270,6 +256,7 @@ def main():
 
   lbl2coll_map = dict()
   ecg_it = 0
+  lines = []
 
   for label, (ecg, scale, alpha) in ecgs.items():
     line_coll = LineCollection()
@@ -278,13 +265,9 @@ def main():
       lead_data = np.array(ecg['ecg'][lead], dtype=float)*scale
 
       line = []
-      #if ecg_it == 0 or (ecg_it > 1 and ecg_it < 5):
-      #if ecg_it == 0 or ecg_it > 4:
       line, = axes[lead].plot(ecg['t'], lead_data, color=lcols[ecg_it], alpha=lalph[ecg_it], label=label, linestyle=LineCollection.LINE_STYLES[0])
-      #if ecg_it == 0:
-      #  line.set_zorder(20)
-
       line_coll.append(line)
+      lines.append(line)
 
     lbl2coll_map[label] = line_coll
     ecg_it = ecg_it + 1
@@ -293,7 +276,7 @@ def main():
     #axes[lead].text(0.01, 0.95, lead, transform=axes[lead].transAxes, size=12)
     tbox = axes[lead].text(0.007, 0.91, lead, transform=axes[lead].transAxes, size=16)
     tbox.set_bbox(dict(facecolor='white', alpha=1.0, edgecolor='black', linewidth=1.5))
-    axes[lead].vlines(vlins, -1.5, 1.5, ls=":", color='gray')
+    #axes[lead].vlines(vlins, -1.5, 1.5, ls=":", color='gray')
     axes[lead].set(xlim=[0.0,5.0], ylim=[-1.5, 1.5])
 
   legline2coll_map = dict()
@@ -306,30 +289,48 @@ def main():
       leg_line.set_picker(5.0)
       legline2coll_map[leg_line] = lbl2coll_map[leg_text.get_text()]
 
-  def onpick(event):
-    artist = event.artist
+  if True:
+    def onpick(event):
+      artist = event.artist
 
-    if isinstance(artist, mpltext.Text):
-      label = artist.get_text()
+      if isinstance(artist, mpltext.Text):
+        label = artist.get_text()
 
-      if (line_coll := lbl2coll_map.get(label, None)) is not None:
-        line_coll.toggle_visibility()
-        alpha = 1.0 if line_coll.visible else 0.2
-        artist.set_alpha(alpha)
-        fig.canvas.draw()
+        if (line_coll := lbl2coll_map.get(label, None)) is not None:
+          line_coll.toggle_visibility()
+          alpha = 1.0 if line_coll.visible else 0.2
+          artist.set_alpha(alpha)
+          fig.canvas.draw()
 
-    elif isinstance(artist, mpllines.Line2D):
-      if (line_coll := legline2coll_map.get(artist, None)) is not None:
-        line_coll.next_style()
-        artist.set_linestyle(line_coll.line_style)
-        fig.canvas.draw()
+      elif isinstance(artist, mpllines.Line2D):
+        if (line_coll := legline2coll_map.get(artist, None)) is not None:
+          line_coll.next_style()
+          artist.set_linestyle(line_coll.line_style)
+          fig.canvas.draw()
 
-  fig.canvas.mpl_connect('pick_event', onpick)
-  #pdf_filepath = "./results/ecg_comp_A.pdf"
-  #pdf_filepath = "./results/ecg_comp_B.pdf"
-  pdf_filepath = "./results/F_wholeheart_ECG.pdf"
-  mplplot.savefig(pdf_filepath, dpi=300, bbox_inches='tight')  
-  mplplot.show()
+    fig.canvas.mpl_connect('pick_event', onpick)
+    #pdf_filepath = "./results/ecg_comp_A.pdf"
+    #pdf_filepath = "./results/ecg_comp_B.pdf"
+    pdf_filepath = "./results/F_wholeheart_ECG.pdf"
+    mplplot.savefig(pdf_filepath, dpi=300, bbox_inches='tight')  
+    mplplot.show()
+  else:
+    def update(frame):
+      it = 0
+
+      for label, (ecg, scale, alpha) in ecgs.items():
+        for lead in ecg['ecg']:
+          lead_data = np.array(ecg['ecg'][lead], dtype=float)*scale
+          lines[it].set_xdata(ecg['t'][:frame*2])
+          lines[it].set_ydata(lead_data[:frame*2])
+          it = it + 1
+
+      return lines
+
+    ani = animation.FuncAnimation(fig=fig, func=update, frames=2500, interval=1/60)
+    #mplplot.tight_layout()
+    writer = animation.FFMpegWriter(fps=60, metadata=dict(artist='Thomas Schrotter'), bitrate=1800)
+    ani.save("./ecg-animation.mp4", writer=writer)
 
 # _________________________________________________________________________________________________
 if __name__ == '__main__':
