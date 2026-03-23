@@ -49,6 +49,7 @@ All neccessary prequesites for reproducing the experimental data are available w
 ```bash
 docker build -t pie-img .
 docker run --rm -it --shm-size=512m pie-img
+cd PIE-Model-Experiments
 ```
 
 Note: shared memory was increased to run openCARP within the container.
@@ -74,6 +75,7 @@ The mesh files of the human whole-heart model are exclusively available on the [
 ```bash
 apt-get update
 apt-get install unzip
+cd PIE-Model-Experiments
 unzip setups.zip
 ```
 
@@ -86,13 +88,13 @@ Running the following command reproduces the experimental results:
 ./eval.sh -np=32
 ```
 
-where the option `-np=<int>` allows to specify the number of threads used for computation. Reproducing all results, except the whole-heart model reference, should take roughly 20 minutes on a desktop computer. 
+where the option `-np=<int>` allows to specify the number of threads used for computation. Reproducing all results, except the whole-heart model reference, took roughly 20 minutes on the test system. 
 
 https://github.com/user-attachments/assets/c4f291c4-4a62-4468-a736-08f7d34a5ccb
 
 https://github.com/user-attachments/assets/2208a2a6-dcc6-4b3e-ae64-08208a553125
 
-Computing the reference data for the human whole-heart experiment requires multiple hours, even with substantial computational resources. Our results were computed on the [Austrian Scientific Cluster](https://www.vsc.ac.at/home/). 
+Computing the reference RD simulation for the human whole-heart experiment requires multiple hours, even with substantial computational resources. Our results were computed within 17 hours on the [Austrian Scientific Cluster](https://www.vsc.ac.at/home/). The PIE simulation of the whole-heart experiment was computed within 4 minutes on the test system.
 
 https://github.com/user-attachments/assets/c6fb7229-38bd-4627-9a41-c944bd12778b
 
