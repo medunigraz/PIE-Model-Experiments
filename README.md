@@ -1,5 +1,5 @@
 # PIE-Model-Experiments
-This repository provides a guide and the necessary resources for reproducing the experimental results of the publication: [A Physics-Informed Eikonal Model for Simulating Arrhythmias in the Human Heart in Real-Time](https://www.researchsquare.com/article/rs-7741556/v1).
+This repository provides a guide and the necessary resources for reproducing the experimental results of the publication: [A Physics-Informed Eikonal Model for Simulating Arrhythmias in the Human Heart in Real-Time](https://doi.org/10.1038/s41467-026-76050-0).
 
 ## Description
 The `setups` directory contains the six experimental setups from the study:
