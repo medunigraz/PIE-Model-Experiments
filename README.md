@@ -113,7 +113,17 @@ Testing was conducted on an Ubuntu 22.04 LTS system equipped with 32 cores of AM
 [2] Gsell, M.A.F., Neic, A., Bishop, M.J., Gillette, K., Prassl, A.J., Augustin, C.M., Vigmond, E.J., Plank, G.: ForCEPSS—A framework for cardiac electrophysiology simulations standardization. Comput. Methods Programs Biomed. 251, 108189 (2024)
 
 ## How to Cite
-When using the data or code provided in this repository, please cite the paper [A Physics-Informed Eikonal Model for Simulating Arrhythmias in the Human Heart in Real-Time](https://www.researchsquare.com/article/rs-7741556/v1). 
+When using the data or code provided in this repository, please cite the paper [A Physics-Informed Eikonal Model for Simulating Arrhythmias in the Human Heart in Real-Time](https://doi.org/10.1038/s41467-026-76050-0). 
+
+```bib
+@article{schrotter2026physics,
+  title={A physics-informed eikonal model for simulating arrhythmias in the human heart in real-time},
+  author={Schrotter, Thomas G and Gsell, Matthias AF and Zappon, Elena and Augustin, Christoph M and Neic, Aurel and Pezzuto, Simone and Plank, Gernot},
+  journal={Nature Communications},
+  year={2026},
+  doi={10.1038/s41467-026-76050-0}
+}
+```
 
 ## Licence
 This repository is released under the Apache Software License, Version 2.0 ("Apache 2.0").
